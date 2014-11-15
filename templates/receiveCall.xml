@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
-<Say voice="woman">What is your favorite design pattern?</Say>
-<Record maxLength="30"  />
+<Say voice="woman">What's your favorite design pattern?</Say>
+<Record 
+  action="http://198.199.104.128:5000/recording"
+  method="POST"
+  maxLength="30"
+  finishOnKey="*" />
 </Response>
