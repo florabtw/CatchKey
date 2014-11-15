@@ -15,7 +15,6 @@ def callCompleted():
 
 @app.route('/recording')
 def receiveRecording():
-    print request;
     return 'thanks'
 
 if __name__ == '__main__':
