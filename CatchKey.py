@@ -7,7 +7,7 @@ def hello_world():
 
 @app.route('/instructions')
 def receiveCall():
-    return render_template('receive_call.xml')
+    return render_template('receiveCall.xml')
 
 @app.route('/completed')
 def callCompleted():
