@@ -19,8 +19,8 @@
   transcribe="false"
   trim="true"
   timeout="10" />
-<Say>Thanks!</Say>
-<Say>What's your choice language?</Say>
+<Say voice="man">Thanks!</Say>
+<Say voice="man">What's your choice language?</Say>
 <Record 
   action="http://198.199.104.128:5000/recording?question=2"
   method="POST"
@@ -29,4 +29,5 @@
   transcribe="false"
   trim="true"
   timeout="10" />
+<Hangup/>
 </Response>
