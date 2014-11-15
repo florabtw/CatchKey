@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 app = Flask(__name__)
 
 questions = [
@@ -20,21 +20,18 @@ def requestForInstructions():
 def callCompleted():
     return 'thanks'
 
-@app.route('/<company>/recording')
+@app.route('/<company>/recording', methods=['POST'])
 def receiveRecording(company):
-    if not request.args['questionNo']:
+    if not request.args.has_key('question'):
         questionNo = 0
     else:
-        questionNo = request.args['questionNo'] + 1
+        questionNo = int(request.args['question']) + 1
 
-    if questionNo >= len(question):
+    if questionNo >= len(questions):
         return render_template( 'Hangup.xml' )
 
     question = questions[ questionNo ]
-    render_template( 'Question.xml',
-     company=company,
-     question=question,
-     questionNo=questionNo )
+    return render_template( 'Question.xml', company=company, question=question, questionNo=questionNo )
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
