@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+<Say voice="man">{{question}}</Say>
+<Record 
+  action="http://198.199.104.128:5000/{{company}}/recording?question={{questionNo}}"
+  method="POST"
+  maxLength="30"
+  finishOnKey="*"
+  transcribe="false"
+  trim="true"
+  timeout="10" />
+</Response>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+<Say voice="man">Hello, this is the screening for a position as a Web Developer. We just want to take two minutes to get the easy stuff out of the way. For any question, press the star key to end the recording and continue.</Say>
+<Say voice="man">What's your name?</Say>
+<Record 
+  action="http://198.199.104.128:5000/{{company}}/recording"
+  method="POST"
+  maxLength="30"
+  finishOnKey="*"
+  transcribe="false"
+  trim="true"
+  timeout="10" />
+</Response>
