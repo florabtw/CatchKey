@@ -85,13 +85,13 @@ app.post('/:company/recording',function(request, response) {
         } 
         else {
           console.log(QuestionTemplate({
-              'question' : co.questions[ questionNo ],
+              'question' : co.questions[ questionNo ].question,
               'questionNo' : questionNo,
               'company' : company
             }))
           response.end(
             QuestionTemplate({
-              'question' : co.questions[ questionNo ],
+              'question' : co.questions[ questionNo ].question,
               'questionNo' : questionNo,
               'company' : company
             }))
