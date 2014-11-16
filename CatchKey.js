@@ -56,7 +56,7 @@ app.get('/:company/candidates', function(request, response) {
             questions:
                 [
                     { question: 'What day is it?',
-                      recording: 'http://soundbible.com/grab.php?id=2078&type=mp3',
+                      recording: 'http://soundoftext.com/audio/English/what.mp3',
                       score: 3
                     },
                     { question: 'Is OOP good?',
