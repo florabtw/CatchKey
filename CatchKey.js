@@ -131,6 +131,8 @@ app.get('/completed', function(request,response) {
 var credentials = require('./credentials.js');
 var clarifyio = require('clarifyio');
 var client = new clarifyio.Client("api.clarify.io", credentials.key);
+
+var twilio = require('twilio')(credentials.twilio_sid, credentials.twilio_token);
 function clarifyQuery( query, filter, response, co, funct ) {
   setTimeout(function() {
             client.search({
@@ -194,9 +196,21 @@ function analyzeCandidate(company, candidatePhoneNumber) {
           if (query_count == 1) {
             console.log('passcount => min', passcount, min)
             if (passcount > min) {
-              console.log("TRYING TO TEXT SUCCESS")
+              
+              twilio.sendMessage(
+              {
+                to: candidatePhoneNumber,
+                from: '+18168446984',
+                body: 'Thank you for chatting with me! An employee from '+company+' will give you a call as soon as they can!'
+              })
+              //console.log("TRYING TO TEXT SUCCESS")
             } else {
-              console.log("TRYING TO TEXT FAILURE")
+              twilio.sendMessage(
+              {
+                to: candidatePhoneNumber,
+                from: '+18168446984',
+                body: 'Thank you for chatting with me! Unfortunately, '+company+' has decided to persue other cadidates at this time.'
+              })
             }
           }
           //=)
