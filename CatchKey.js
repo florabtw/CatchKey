@@ -134,7 +134,7 @@ var client = new clarifyio.Client("api.clarify.io", credentials.key);
 
 var twilio = require('twilio')(credentials.twilio_sid, credentials.twilio_token);
 function clarifyQuery( query, filter, response, co, funct ) {
-  setTimeout(function() {
+  //setTimeout(function() {
             client.search({
                 query: query,
                 filter: 'bundle.name=="'+filter+'"'
@@ -149,14 +149,18 @@ function clarifyQuery( query, filter, response, co, funct ) {
                   funct( data, response.score, response.question.goal, response.question.minimum, co )
                 }
             })
-        }, 1000*30);
+       // }, 1000*30);
 }
-function clarifyCreateBundle( url, name ) {
+function clarifyCreateBundle( url, query, bundleName, response, co, funct) {
     client.createBundle({
     media_url : url,
-    name : name
+    name : name,
+    notify_url: 'http://198.199.104.128/'+bundleName.replace(/\s/gm)
   },function(e,d){
     console.log('Create Bundle Response:',e,JSON.stringify(d))
+    app.get(bundleName.replace(/\s/gm),function(){
+      clarifyQuery( query, bundleName, response, co, funct )
+    })
   })
 }
 //analyzeCandidate('CatchKey', '+13148537371')
@@ -177,16 +181,7 @@ function analyzeCandidate(company, candidatePhoneNumber) {
         }
         console.log(JSON.stringify(response))
         var bundleName = randoPrefix+company+i+candidatePhoneNumber;
-        clarifyCreateBundle( response.answer, bundleName )
-        console.log('answer=>',response.answer)
-        var query = response.question.answers.reduce(function(acc,x) {
-            return acc + ' | ' + x;
-        },"");
-
-        // console.log(query);
-        var passcount = 0;
-        var query_count = Object.keys(can).length;
-        clarifyQuery( query, bundleName, response, co, function(data, score, goal, min) {
+        clarifyCreateBundle(  response.answer, query, bundleName, response, co, function(data, score, goal, min) {
           query_count--;
           console.log('score => goal', score, goal)
           console.log('query count',query_count)
@@ -214,7 +209,16 @@ function analyzeCandidate(company, candidatePhoneNumber) {
             }
           }
           //=)
-        });
+        } )
+        console.log('answer=>',response.answer)
+        var query = response.question.answers.reduce(function(acc,x) {
+            return acc + ' | ' + x;
+        },"");
+
+        // console.log(query);
+        var passcount = 0;
+        var query_count = Object.keys(can).length;
+        clarifyQuery();
         // var bundleName = question.question + candidatePhoneNumber
         
     }
