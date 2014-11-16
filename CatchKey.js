@@ -133,8 +133,10 @@ var clarifyio = require('clarifyio');
 var client = new clarifyio.Client("api.clarify.io", credentials.key);
 
 var twilio = require('twilio')(credentials.twilio_sid, credentials.twilio_token);
+var bundles = {};
 function clarifyQuery( query, filter, response, co, funct ) {
   //setTimeout(function() {
+      if (!response) response = bundles[filter]
         console.log('query!')
             client.search({
                 query: query,
@@ -153,6 +155,7 @@ function clarifyQuery( query, filter, response, co, funct ) {
        // }, 1000*30);
 }
 function clarifyCreateBundle( url, query, bundleName, response, co, funct) {
+    bundles[bundleName] = response;
     client.createBundle({
     media_url : url,
     name : bundleName,
