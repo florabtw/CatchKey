@@ -48,11 +48,11 @@ module.exports.saveCandidateResponse =
 
           // get a candidate...
           if (!companyToSave.candidates) {
-            companyToSave.candidates = {};
+            companyToSave.candidates = { };
             companyToSave.markModified('candidates');
           }
           if (!companyToSave.candidates[caller]){
-            companyToSave.candidates[caller] = {};
+            companyToSave.candidates[caller] = { 'uploaded': false };
             companyToSave.markModified('candidates');
           }
           // get the current question...

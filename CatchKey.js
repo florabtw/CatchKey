@@ -78,8 +78,17 @@ app.get('/completed', function(request,response) {
   response.end();
 })
 
-/* recording helpers */
+function analyzeCandidate(company, candidatePhoneNumber) {
+  // get candidate audio
+  db.Company.findOne({ name: company}, function( error, co) {
+    var can = co.candidates[ candidatePhoneNumber ]
+    console.log(can);
+  // upload to clarify
+  //client.createBundle('url', function())
+  })
+}
 
+/* recording helpers */
 app.post('/:company/recording',function(request, response) {
   response.setHeader('content-type', 'application/xml')
   var 
@@ -103,6 +112,7 @@ app.post('/:company/recording',function(request, response) {
         if (bool) {
           response.end(
           HangupTemplate());
+          analyzeCandidate(company, candidatePhoneNumber);
         } 
         else {
           console.log(co.questions[ questionNo ].question)
