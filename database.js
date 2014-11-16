@@ -87,7 +87,7 @@ module.exports.isLastQuestion =
         else {
           if (funct) {
             console.log('last query?', questionNo, co.questions.length );
-            funct( questionNo >= co.questions.length, co );
+            funct( questionNo >= co.questions.length - 1, co );
           }
         }
       })

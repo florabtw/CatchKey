@@ -77,6 +77,9 @@ app.post('/:company/recording',function(request, response) {
     if (recording){
       db.saveCandidateResponse(
         company, questionNo, caller, recording );
+    } else {
+      console.log('retry?')
+      console.log(request.url)
     }
     db.isLastQuestion(
       company, questionNo, function( bool, co ) {
