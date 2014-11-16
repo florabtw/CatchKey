@@ -187,11 +187,11 @@ function analyzeCandidate(company, candidatePhoneNumber) {
           query_count--;
           if (query_count == 0) {
             var passcount = 0;
-            for (var i in can) {
-              if ( score >= goal ) {
-                passcount++;
-              }
+            console.log('score => goal', score, goal)
+            if ( score >= goal ) {
+              passcount++;
             }
+            console.log('passcount => min', passcount, min)
             if (passcount > min) {
               console.log("TRYING TO TEXT SUCCESS")
             } else {
