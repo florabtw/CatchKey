@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
 <Say voice="man">Thank you for calling about a position at {{company}}, let's just get the simple stuff out of the way so that you can talk to a real human! For each question, you have 60 seconds to answer. Press star to end your answer early. . . </Say>
-<Pause length=1/>
+<Pause length="1"/>
 <Redirect method="POST">http://198.199.104.128:5000/{{company}}/recording?question=0</Redirect>
 </Response>
