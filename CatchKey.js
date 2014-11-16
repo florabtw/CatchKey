@@ -51,39 +51,57 @@ app.get('/instructions', function(request, response) {
 
 app.get('/:company/candidates', function(request, response) {
     var company = request.params.company;
-    var candidates = {
-        '458-343-5567': {
-            questions:
-                [
-                    { question: 'What day is it?',
-                      recording: 'http://soundoftext.com/audio/English/what.mp3',
-                      score: 3
-                    },
-                    { question: 'Is OOP good?',
-                      recording: 'google.com',
-                      score: 5
-                    }
-                ],
-            total: 8
-        },
-        '573-456-2355': {
-            questions:
-                [
-                    { question: 'What day is it?',
-                      recording: 'google.com',
-                      score: 2
-                    },
-                    { question: 'Is OOP good?',
-                      recording: 'google.com',
-                      score: 4
-                    }
-                ],
-            total: 6
+
+    db.Company.findOne({ name: company}, function(err, comp){
+      var candidates = comp.candidates;
+      var candidatesToReturn = {};
+      for (var i in candidates) {
+        var total = 0;
+        candidatesToReturn[i] = {};
+        candidatesToReturn[i].questions = [];
+        
+        for (var j in candidates[i]) {
+          candidates[i][j].recording = candidates[i][j].answer;
+          candidatesToReturn[i].questions.push(candidates[i][j]);
+          total += candidates[i][j].score;
         }
+        candidatesToReturn[i].total = total;
+      }
+    
+      response.end(CandidatesTemplate({ company: company, candidates: candidatesToReturn }));
+    })
+    // var candidates = {
+    //     '458-343-5567': {
+    //         questions:
+    //             [
+    //                 { question: 'What day is it?',
+    //                   recording: 'http://soundoftext.com/audio/English/what.mp3',
+    //                   score: 3
+    //                 },
+    //                 { question: 'Is OOP good?',
+    //                   recording: 'google.com',
+    //                   score: 5
+    //                 }
+    //             ],
+    //         total: 8
+    //     },
+    //     '573-456-2355': {
+    //         questions:
+    //             [
+    //                 { question: 'What day is it?',
+    //                   recording: 'google.com',
+    //                   score: 2
+    //                 },
+    //                 { question: 'Is OOP good?',
+    //                   recording: 'google.com',
+    //                   score: 4
+    //                 }
+    //             ],
+    //         total: 6
+    //     }
     };
 
-    response.end(CandidatesTemplate({ company: company, candidates: candidates }));
-})
+// })
 
 app.get('/:company/questions', function( request, response) {
   var company = request.params.company;
