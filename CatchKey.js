@@ -57,16 +57,16 @@ app.get('/:company/candidates', function(request, response) {
         var candidatesToReturn = {};
         for (var i in candidates) {
           var total = 0;
+          if (!candidates[i][0].question) continue;
           candidatesToReturn[i] = {};
           candidatesToReturn[i].questions = [];
-          
           for (var j in candidates[i]) {
-            if (!candidates[i][j].question) continue;
             candidates[i][j].recording = candidates[i][j].answer;
             candidates[i][j].question = candidates[i][j].question.question
             candidatesToReturn[i].questions.push(candidates[i][j]);
             total += candidates[i][j].score;
           }
+
           candidatesToReturn[i].total = total;
         }
         console.log(JSON.stringify(candidatesToReturn))
