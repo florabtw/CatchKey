@@ -45,6 +45,17 @@ app.get('/instructions', function(request, response) {
 
 })
 
+app.get('/:company/questions', function( request, response) {
+  var company = request.params.company;
+  db.Company.findOne({'name':company},function(error,co) {
+    var questions = co.questions;
+    for (var i in questions) {
+      questions.keywords = questions.answers
+    }
+    response.json(questions);
+  })
+})
+
 app.post('/:company/questions', function( request, response) {
     response.end('thanks');
     console.log(request.body);
