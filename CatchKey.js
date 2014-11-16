@@ -75,6 +75,7 @@ app.get('/:company/candidates', function(request, response) {
           candidatesToReturn[i] = {};
           candidatesToReturn[i].questions = [];
           for (var j in candidates[i]) {
+            if (!(j/1 >= 0)) continue;
             candidates[i][j].recording = candidates[i][j].answer;
             candidates[i][j].question = candidates[i][j].question.question
             candidatesToReturn[i].questions.push(candidates[i][j]);
