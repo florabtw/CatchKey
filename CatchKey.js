@@ -68,7 +68,7 @@ app.get('/completed', function(request,response) {
 app.post('/:company/recording',function(request, response) {
   response.setHeader('content-type', 'application/xml')
   var 
-    questionNo = request.query.questionNo || 0,
+    questionNo = request.query.question || 0,
     company = request.params.company,
     caller = request.body.Caller,
     recording = request.body.RecordingUrl;
