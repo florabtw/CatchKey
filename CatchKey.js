@@ -101,7 +101,7 @@ function analyzeCandidate(company, candidatePhoneNumber) {
         'filter' : 'bundle.name=="test bundle"'
       },function(e, data) {
         //console.log(arguments)
-        console.log(JSON.stringify(data.item_results))
+        console.log(JSON.stringify(data))
       })
 
     },1000*10)
