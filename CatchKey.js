@@ -31,6 +31,10 @@ const
   HangupTemplate =
   hbs.compile(
     ''+fs.readFileSync('templates/Hangup.xml','utf8')
+    ),
+  RetryTemplate = 
+  hbs.compile(
+    ''+fs.readFileSync('templates/Retry.xml','utf8')
     );
 
 
@@ -68,17 +72,24 @@ app.get('/completed', function(request,response) {
 app.post('/:company/recording',function(request, response) {
   response.setHeader('content-type', 'application/xml')
   var 
-    questionNo = request.query.questionNo || 0,
+    questionNo = request.query.question/1 || 0,
     company = request.params.company,
     caller = request.body.Caller,
     recording = request.body.RecordingUrl;
+    console.log(request.body)
+    console.log(questionNo > 0, questionNo, recording)
 
-
-    if (recording){
+    if (recording && request.body.RecordingDuration/1 > 3){
       db.saveCandidateResponse(
-        company, questionNo, caller, recording );
+        company, questionNo - 1, caller, recording );
+    } else if (questionNo > 0) {      
+      response.end( RetryTemplate({ 'company': company, 'questionNo': questionNo - 1}));
+      return;
+    } else {
+      response.end( RetryTemplate({ 'company': company, 'questionNo':0}));
+      return;
     }
-    db.isLastQuestion(
+    db.questionExists(
       company, questionNo, function( bool, co ) {
         if (bool) {
           response.end(

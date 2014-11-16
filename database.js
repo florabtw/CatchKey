@@ -56,6 +56,7 @@ module.exports.saveCandidateResponse =
             companyToSave.markModified('candidates');
           }
           // get the current question...
+          console.log('?s => #',companyToSave.questions, questionNo)
           var question = companyToSave.questions[ questionNo ];
           if (!question){
             throw "question No has no corresponding question in the company question set";
@@ -74,11 +75,11 @@ module.exports.saveCandidateResponse =
         }
       })
 }
-module.exports.isLastQuestion = 
+module.exports.questionExists = 
     function( company, questionNo, funct ) {
       Company.findOne({ name: company}, function(error, co) {
         if (error) {
-          throw "mongo failed hard when looking up a company for 'isLastQuestion'";
+          throw "mongo failed hard when looking up a company for 'questionExists'";
         }
         else if (!co) {
           throw "mongo failed to find this company "+company;
