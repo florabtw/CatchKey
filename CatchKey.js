@@ -122,11 +122,11 @@ app.get('/completed', function(request,response) {
 var credentials = require('./credentials.js');
 var clarifyio = require('clarifyio');
 var client = new clarifyio.Client("api.clarify.io", credentials.key);
-function clarifyQuery( query, funct ) {
+function clarifyQuery( query, filter, funct ) {
   setTimeout(function() {
             client.search({
                 query: query,
-                filter: 'bundle.name=="test bundle"'
+                filter: 'bundle.name=="'+filter+'"'
             },function(e, data) {
                 console.log(e)
                 console.log(data)
@@ -159,14 +159,15 @@ function analyzeCandidate(company, candidatePhoneNumber) {
             return;
         }
         console.log(JSON.stringify(response))
-        clarifyCreateBundle( response.answer, company+i+candidatePhoneNumber )
+        var bundleName = company+i+candidatePhoneNumber;
+        clarifyCreateBundle( response.answer, bundleName )
 
         var query = response.question.answers.reduce(function(acc,x) {
             return acc + ' | ' + x;
         },"");
 
         // console.log(query);
-        clarifyQuery( query, function(data) {
+        clarifyQuery( query, bundleName, function(data) {
           //console.log(JSON.stringify(data))
         });
         // var bundleName = question.question + candidatePhoneNumber
