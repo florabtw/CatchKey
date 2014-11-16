@@ -147,7 +147,7 @@ function clarifyCreateBundle( url, name ) {
     console.log('Create Bundle Response:',e,JSON.stringify(d))
   })
 }
-
+analyzeCandidate('CatchKey', '+13148537371')
 function analyzeCandidate(company, candidatePhoneNumber) {
   // get candidate audio
   db.Company.findOne({ name: company}, function( error, co) {
