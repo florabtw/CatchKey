@@ -78,11 +78,25 @@ app.get('/completed', function(request,response) {
   response.end();
 })
 
+var credentials = require('./credentials.js');
+var clarifyio = require('clarifyio');
+var client = new clarifyio.Client("api.clarify.io", credentials.key);
 function analyzeCandidate(company, candidatePhoneNumber) {
   // get candidate audio
   db.Company.findOne({ name: company}, function( error, co) {
     var can = co.candidates[ candidatePhoneNumber ]
     console.log('LOOK AT ME',can);
+    for (var i in can) {
+      console.log(can[i].answer)
+
+    }
+    
+    client.createBundle({
+      media_url : can[0].answer,
+      name : can[0].answer
+    },function(){
+      console.log(arguments)
+    })
   // upload to clarify
   //client.createBundle('url', function())
   })
