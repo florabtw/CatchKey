@@ -99,7 +99,7 @@ app.get('/:company/candidates', function(request, response) {
     //             ],
     //         total: 6
     //     }
-    };
+    });
 
 // })
 
