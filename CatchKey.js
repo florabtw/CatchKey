@@ -131,7 +131,7 @@ function clarifyQuery( query, filter, response, co, funct ) {
                 console.log(e)
                 console.log(JSON.stringify(data))
                 response.score = score( data);
-                co.markModifed('candidates');
+                co.markModified('candidates');
                 co.save();
                 if (funct) {
                   funct( data )
