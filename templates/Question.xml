@@ -4,9 +4,9 @@
 <Record 
   action="http://198.199.104.128:5000/{{company}}/recording?question={{questionNo}}"
   method="POST"
-  maxLength="30"
+  maxLength="60"
   finishOnKey="*"
   transcribe="false"
   trim="true"
-  timeout="5" />
+  timeout="10" />
 </Response>
