@@ -10,3 +10,5 @@
   trim="true"
   timeout="5" />
 </Response>
+<Say voice="woman">Sorry, I didn't catch that, please try again.</Say>
+<Redirect method="POST">http://198.199.104.128:5000/{{company}}/recording?question={{questionNo}}</Redirect>
