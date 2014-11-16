@@ -62,6 +62,7 @@ app.get('/:company/candidates', function(request, response) {
         for (var i in candidates) {
           var flag = false;
           for (var j in candidates[i]) {
+            console.log(i,j)
             if (!candidates[i][j].question) {
               console.log( 'ignored', i, j)
               flag = true;
