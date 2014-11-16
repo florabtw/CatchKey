@@ -47,8 +47,9 @@ app.post('/:company/questions', function( request, response) {
     var questions = [];
     for (var key in request.body) {
       if (key.indexOf('question') >= 0) {
+
         var num = key.substring( 'question'.length );
-        var answers = request.body[ 'answer'+num ];
+        var answers = request.body[ 'keywords'+num ];
         var question = request.body[ 'question'+num ];
         questions.push( {'question': question, 'answers': answers.split(',') } )
       }
