@@ -73,13 +73,14 @@ app.post('/:company/recording',function(request, response) {
     caller = request.body.Caller,
     recording = request.body.RecordingUrl;
 
+
     if (recording){
       db.saveCandidateResponse(
         company, questionNo, caller, recording );
     }
     db.isLastQuestion(
       company, questionNo, function( bool, co ) {
-        if (bool === true) {
+        if (bool) {
           response.end(
           HangupTemplate());
         } 
