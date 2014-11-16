@@ -1,3 +1,8 @@
-.pure-table-odd {
+body {
+  width: 960px;
+  margin: 0 auto;
+}
+
+.pure-table-odd td {
   padding-left: 20px;
 }
