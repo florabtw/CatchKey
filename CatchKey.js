@@ -162,8 +162,9 @@ function clarifyCreateBundle( url, query, bundleName, response, co, funct) {
     notify_url: 'http://198.199.104.128/'+bundleName.replace(/\s/gm)
   },function(e,d){
     console.log('Create Bundle Response:',e,JSON.stringify(d))
-    app.get(bundleName.replace(/\s/gm),function(){
-      clarifyQuery( query, bundleName, response, co, funct )
+    app.get('/bundle/:bundlename',function(request, response){
+      var res = bundles[request.params.bundlename]
+      clarifyQuery( query, request.params.bundlename, res, co, (function() {return funct})() )
     })
   })
 }
