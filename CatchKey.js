@@ -31,6 +31,7 @@ const
 app.get('/instructions', function(request, response) {
   var caller = request.query.Caller;
   console.log(caller)
+  console.log(BeginCallTemplate( { company : 'catchKey' } ))
   response.end( 
     BeginCallTemplate( { company : 'catchKey' } ));
 })
