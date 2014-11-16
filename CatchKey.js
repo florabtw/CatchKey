@@ -50,7 +50,7 @@ app.get('/:company/questions', function( request, response) {
   db.Company.findOne({'name':company},function(error,co) {
     var questions = co.questions;
     for (var i in questions) {
-      questions.keywords = questions.answers
+      questions[i].keywords = questions[i].answers
     }
     response.json(questions);
   })
