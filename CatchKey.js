@@ -79,7 +79,7 @@ app.post('/:company/recording',function(request, response) {
         company, questionNo - 1, caller, recording );
     } else {
       console.log('retry?');
-      res.redirect(request.url);
+      response.redirect(request.url);
       return;
     }
     db.questionExists(
