@@ -67,7 +67,7 @@ app.get('/:company/candidates', function(request, response) {
         }
         candidatesToReturn[i].total = total;
       }
-    
+      console.log(candidatesToReturn)
       response.end(CandidatesTemplate({ company: company, candidates: candidatesToReturn }));
     })
     // var candidates = {
@@ -166,7 +166,7 @@ function clarifyCreateBundle( url, name ) {
     console.log('Create Bundle Response:',e,JSON.stringify(d))
   })
 }
-analyzeCandidate('CatchKey', '+13148537371')
+//analyzeCandidate('CatchKey', '+13148537371')
 var randoPrefix = ''+Math.random();
 function analyzeCandidate(company, candidatePhoneNumber) {
   // get candidate audio
