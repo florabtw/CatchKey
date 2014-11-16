@@ -140,8 +140,8 @@ function clarifyCreateBundle( url, name ) {
     client.createBundle({
     media_url : url,
     name : name
-  },function(){
-    console.log(arguments)
+  },function(e,d){
+    console.log(JSON.stringify(d))
   })
 }
 function analyzeCandidate(company, candidatePhoneNumber) {
