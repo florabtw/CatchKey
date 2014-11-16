@@ -155,7 +155,7 @@ function clarifyQuery( query, filter, response, co, funct ) {
 function clarifyCreateBundle( url, query, bundleName, response, co, funct) {
     client.createBundle({
     media_url : url,
-    name : name,
+    name : bundleName,
     notify_url: 'http://198.199.104.128/'+bundleName.replace(/\s/gm)
   },function(e,d){
     console.log('Create Bundle Response:',e,JSON.stringify(d))
