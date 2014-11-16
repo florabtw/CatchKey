@@ -45,7 +45,12 @@ module.exports.saveCandidateResponse =
           if (!companyToSave) {
             throw "company does not exist to save recording for";
           }
+
           // get a candidate...
+          if (!companyToSave.candidates) {
+            companyToSave.candidates = {};
+            companyToSave.markModified('candidates');
+          }
           if (!companyToSave.candidates[caller]){
             companyToSave.candidates[caller] = {};
             companyToSave.markModified('candidates');
