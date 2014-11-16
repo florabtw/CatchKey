@@ -40,11 +40,10 @@ app.get('/instructions', function(request, response) {
     BeginCallTemplate( { company : 'catchKey' } ));
 
 })
-var catchKeyPretendSetup = {
-  'question-1' :
-}
+
 app.post('/:company/questions', function( request, response) {
     response.end('thanks');
+    console.log(request.body);
     var questions = [];
     var company = request.params.company;
     db.saveQuestionSet( company, questions );
