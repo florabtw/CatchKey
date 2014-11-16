@@ -62,7 +62,9 @@ function getQuestions() {
 
         $('#first-q').val(firstQ.question);
         $('#first-k').val(firstQ.keywords);
-        $('#first-g').val(3);
+        $('#first-g').val(firstQ.goal);
+
+        $('#minimum').val(firstQ.minimum);
 
         addQuestions(data);
     });
@@ -70,6 +72,6 @@ function getQuestions() {
 
 function addQuestions(questions) {
     $.each(questions, function(i, val) {
-        addQuestion(val.question, val.keywords, 3);
+        addQuestion(val.question, val.keywords, val.goal);
     });
 }
