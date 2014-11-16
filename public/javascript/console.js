@@ -63,12 +63,12 @@ function getQuestions() {
     url = server + '/CatchKey/questions'
 
     $.get(url, function(data) {
-        var firstQ = questions.shift();
+        var firstQ = data.shift();
 
         $('#first-q').val(firstQ.question);
         $('#first-k').val(firstQ.keywords);
 
-        addQuestions(questions);
+        addQuestions(data);
     });
 }
 
