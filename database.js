@@ -65,6 +65,7 @@ module.exports.saveCandidateResponse =
             'answer': responseUrl
           };
           companyToSave.markModified('candidates');
+          console.log(companyToSave)
           companyToSave.save(function(error) {
             console.log(error);
             throw "response failed to save to mongodb";
