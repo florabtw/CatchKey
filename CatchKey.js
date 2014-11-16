@@ -51,39 +51,48 @@ app.get('/instructions', function(request, response) {
 
 app.get('/:company/candidates', function(request, response) {
     var company = request.params.company;
-    var candidates = {
-        '458-343-5567': {
-            questions:
-                [
-                    { question: 'What day is it?',
-                      recording: 'http://soundoftext.com/audio/English/what.mp3',
-                      score: 3
-                    },
-                    { question: 'Is OOP good?',
-                      recording: 'google.com',
-                      score: 5
-                    }
-                ],
-            total: 8
-        },
-        '573-456-2355': {
-            questions:
-                [
-                    { question: 'What day is it?',
-                      recording: 'google.com',
-                      score: 2
-                    },
-                    { question: 'Is OOP good?',
-                      recording: 'google.com',
-                      score: 4
-                    }
-                ],
-            total: 6
+    try {
+      db.Company.findOne({ name: company}, function(err, comp){
+        if (!comp){
+          response.end('');
+          return;
         }
-    };
+        var candidates = comp.candidates;
+        var candidatesToReturn = {};
+        for (var i in candidates) {
+          var flag = false;
+          for (var j in candidates[i]) {
+            console.log(i,j)
+            if (!candidates[i][j].question && j/1 >= 0) {
+              console.log( 'ignored', i, j)
+              flag = true;
+            };
+          }
+          if (flag === true) {
+            continue;
+          }
+          var total = 0;
+          candidatesToReturn[i] = {};
+          candidatesToReturn[i].questions = [];
+          for (var j in candidates[i]) {
+            if (!(j/1 >= 0)) continue;
+            candidates[i][j].recording = candidates[i][j].answer;
+            candidates[i][j].question = candidates[i][j].question.question
+            candidatesToReturn[i].questions.push(candidates[i][j]);
+            total += candidates[i][j].score;
+          }
 
-    response.end(CandidatesTemplate({ company: company, candidates: candidates }));
-})
+          candidatesToReturn[i].total = total;
+        }
+        console.log(JSON.stringify(candidatesToReturn))
+        response.end(CandidatesTemplate({ company: company, candidates: candidatesToReturn }));
+      })
+    } catch (e) {
+      console.log('tried to refresh page too early')
+    }
+    });
+
+// })
 
 app.get('/:company/questions', function( request, response) {
   var company = request.params.company;
@@ -102,13 +111,14 @@ app.post('/:company/questions', function( request, response) {
     var questions = [];
     for (var key in request.body) {
       if (key.indexOf('question') >= 0 && request.body[key].length > 0) {
-
         var num = key.substring( 'question'.length );
         var answers = request.body[ 'keywords'+num ];
         var question = request.body[ 'question'+num ];
-        questions.push( {'question': question, 'answers': answers.split(',') } )
+        var goal = request.body[ 'goal'+num ];
+        questions.push( {'question': question, 'answers': answers.split(','), 'goal':goal } )
       }
     }
+    questions.minimum = request.body['minimum'];
     console.log(questions)
     var company = request.params.company;
     db.saveQuestionSet( company, questions );
@@ -118,34 +128,66 @@ app.get('/completed', function(request,response) {
   response.end();
 })
 
+ 
 var credentials = require('./credentials.js');
 var clarifyio = require('clarifyio');
 var client = new clarifyio.Client("api.clarify.io", credentials.key);
+function clarifyQuery( query, filter, response, co, funct ) {
+  setTimeout(function() {
+            client.search({
+                query: query,
+                filter: 'bundle.name=="'+filter+'"'
+            },function(e, data) {
+                console.log(e)
+                console.log(JSON.stringify(data))
+                console.log('score =>', score( data));
+                response.score = score( data);
+                co.markModified('candidates');
+                co.save();
+                if (funct) {
+                  funct( data )
+                }
+            })
+        }, 1000*30);
+}
+function clarifyCreateBundle( url, name ) {
+    client.createBundle({
+    media_url : url,
+    name : name
+  },function(e,d){
+    console.log('Create Bundle Response:',e,JSON.stringify(d))
+  })
+}
+//analyzeCandidate('CatchKey', '+13148537371')
+var randoPrefix = ''+Math.random();
 function analyzeCandidate(company, candidatePhoneNumber) {
   // get candidate audio
   db.Company.findOne({ name: company}, function( error, co) {
     var can = co.candidates[ candidatePhoneNumber ]
-    console.log('LOOK AT ME',can);
+    console.log(co.questions);
+
+
+//    var questions = co.questions;
     for (var i in can) {
-      console.log(can[i].answer)
-      // client.createBundle({
-      //   media_url : can[i].answer,
-      //   name : can[i].answer
-      // },function(){
-      //   console.log(arguments)
-      // })
+        var response = can[i];
 
-    setTimeout(function() {
-      client.search({
-        'query' : 'the OR fat OR cat OR lazy',
-        'filter' : 'bundle.name=="test bundle"'
-      },function(e, data) {
-        //console.log(arguments)
-        console.log(JSON.stringify(data))
-      })
+        if (!response.answer) {
+            return;
+        }
+        console.log(JSON.stringify(response))
+        var bundleName = randoPrefix+company+i+candidatePhoneNumber;
+        clarifyCreateBundle( response.answer, bundleName )
+        console.log('answer=>',response.answer)
+        var query = response.question.answers.reduce(function(acc,x) {
+            return acc + ' | ' + x;
+        },"");
 
-    },1000*10)
-
+        // console.log(query);
+        clarifyQuery( query, bundleName, response, co, function(data) {
+          //=)
+        });
+        // var bundleName = question.question + candidatePhoneNumber
+        
     }
 
     //client.search
@@ -154,7 +196,7 @@ function analyzeCandidate(company, candidatePhoneNumber) {
   })
 }
 
-analyzeCandidate('CatchKey', '+13148537371');
+//analyzeCandidate('CatchKey', '+13148537371');
 
 function score(result) {
     itemResults = result.item_results;
@@ -191,13 +233,13 @@ app.post('/:company/recording',function(request, response) {
     console.log('this quiestion:', questionNo);
 
     if (recording){
-      // db.saveCandidateResponse(
-      //   company, questionNo - 1, caller, recording );
+      db.saveCandidateResponse(
+        company, questionNo - 1, caller, recording );
     }
-    // if ( questionNo > 0 && ( request.body.RecordingDuration/1 < 4 || (!recording && !retry) )) {      
-    //   response.end( RetryTemplate({ 'company': company, 'questionNo': questionNo }));
-    //   return;
-    // }
+    if ( questionNo > 0 && ( request.body.RecordingDuration/1 < 4 || (!recording && !retry) )) {      
+      response.end( RetryTemplate({ 'company': company, 'questionNo': questionNo }));
+      return;
+    }
 
     db.questionExists(
       company, questionNo, function( bool, co ) {

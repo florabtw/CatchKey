@@ -9,19 +9,20 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/console.css"/>
   </head>
   <body>
-    <a href="/CatchKey/candidates"><h1>CatchKey</h1></a>
-    <form id="questions" class="pure-form pure-g">
-      <div class="pure-u-2-5">Questions</div>
-      <div class="pure-u-2-5">Keywords</div>
-      <div class="pure-u-1-5"></div>
-      <div class="pure-u-2-5">
-        <input id="first-q" name="question0" class="pure-input-1" type="text" />
+    <h1>CatchKey</h1>
+    <form id="questions" class="pure-form">
+      <div id="q-grid" class="pure-g">
+        <div class="pure-u-9-24">Questions</div>
+        <div class="pure-u-9-24">Keywords</div>
+        <div class="pure-u-6-24">Goal</div>
+        <input id="first-q" name="question0" class="pure-u-9-24" type="text" />
+        <input id="first-k" name="keywords0" class="pure-u-9-24" type="text" />
+        <input id="first-g" name="goal0" class="pure-u-3-24" type="text" />
+        <button class="pure-u-3-24 pure-button pure-button-primary" type="button" onclick="addRow()">Add</button>
       </div>
-      <div class="pure-u-2-5">
-        <input id="first-k" name="keywords0" class="pure-input-1" type="text" />
-      </div>
-      <div class="pure-u-1-5">
-        <button class="pure-u-2-5 pure-button pure-button-primary" type="button" onclick="addRow()">Add</button>
+      <div class="pure-form-stacked">
+        <label for="minimum">Minimum</label>
+        <input name="minimum" type="text" class="pure-u-1-8" />
       </div>
     </form>
     <button id="save" class="pure-button button-success" type="button" onclick="setQuestions()">Save</button>

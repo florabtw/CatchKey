@@ -6,48 +6,43 @@ $(document).ready(function() {
 });
 
 function addRow() {
-    addQuestion("", "");
+    addQuestion("", "", "");
 }
 
-function addQuestion(question, keywords) {
-    var question = createInput('question' + numRows, question);
-    var keywords = createInput('keywords' + numRows, keywords);
+function addQuestion(question, keywords, goal) {
+    var question = createInput('question' + numRows, question, 'pure-u-9-24');
+    var keywords = createInput('keywords' + numRows, keywords, 'pure-u-9-24');
+    var goal = createInput('goal' + numRows, goal, 'pure-u-3-24');
     numRows++;
     var btnRemove = createButton();
 
-    btnRemove.find('button').eq(0).click(function() {
+    btnRemove.click(function() {
         question.remove();
         keywords.remove();
+        goal.remove();
         btnRemove.remove();
     });
 
-    $('#questions')
+    $('#q-grid')
         .append(question)
         .append(keywords)
+        .append(goal)
         .append(btnRemove);
 }
 
 function createButton() {
-    return $('<div/>')
-        .addClass('pure-u-1-5')
-        .append(
-            $('<button/>')
-                .addClass('pure-u-2-5 button-error pure-button')
-                .attr('type', 'button')
-                .text('Remove')
-        );
+    return $('<button/>')
+            .addClass('pure-u-3-24 button-error pure-button')
+            .attr('type', 'button')
+            .text('Remove');
 }
 
-function createInput(name, text) {
-    return $('<div/>')
-        .addClass('pure-u-2-5')
-        .append(
-            $('<input/>')
-                .addClass("pure-input-1")
-                .attr('type', 'text')
-                .attr('name', name)
-                .val(text)
-        );
+function createInput(name, text, size) {
+    return $('<input/>')
+            .addClass(size)
+            .attr('type', 'text')
+            .attr('name', name)
+            .val(text)
 }
 
 function setQuestions() {
@@ -67,6 +62,7 @@ function getQuestions() {
 
         $('#first-q').val(firstQ.question);
         $('#first-k').val(firstQ.keywords);
+        $('#first-g').val(3);
 
         addQuestions(data);
     });
@@ -74,6 +70,6 @@ function getQuestions() {
 
 function addQuestions(questions) {
     $.each(questions, function(i, val) {
-        addQuestion(val.question, val.keywords);
+        addQuestion(val.question, val.keywords, 3);
     });
 }
