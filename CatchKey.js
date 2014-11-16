@@ -122,7 +122,7 @@ app.get('/completed', function(request,response) {
 var credentials = require('./credentials.js');
 var clarifyio = require('clarifyio');
 var client = new clarifyio.Client("api.clarify.io", credentials.key);
-function clarifyQuery( query, filter, funct ) {
+function clarifyQuery( query, filter, response, co, funct ) {
   setTimeout(function() {
             client.search({
                 query: query,
@@ -130,6 +130,9 @@ function clarifyQuery( query, filter, funct ) {
             },function(e, data) {
                 console.log(e)
                 console.log(JSON.stringify(data))
+                response.score = score( data);
+                co.markModifed('candidates');
+                co.save();
                 if (funct) {
                   funct( data )
                 }
@@ -144,6 +147,7 @@ function clarifyCreateBundle( url, name ) {
     console.log('Create Bundle Response:',e,JSON.stringify(d))
   })
 }
+
 function analyzeCandidate(company, candidatePhoneNumber) {
   // get candidate audio
   db.Company.findOne({ name: company}, function( error, co) {
@@ -151,7 +155,7 @@ function analyzeCandidate(company, candidatePhoneNumber) {
     console.log(co.questions);
 
 
-    var questions = co.questions;
+//    var questions = co.questions;
     for (var i in can) {
         var response = can[i];
 
@@ -167,8 +171,8 @@ function analyzeCandidate(company, candidatePhoneNumber) {
         },"");
 
         // console.log(query);
-        clarifyQuery( query, bundleName, function(data) {
-          //console.log(JSON.stringify(data))
+        clarifyQuery( query, bundleName, response, co, function(data) {
+          //=)
         });
         // var bundleName = question.question + candidatePhoneNumber
         
