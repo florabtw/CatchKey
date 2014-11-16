@@ -9,8 +9,14 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/console.css"/>
   </head>
   <body>
-    {{#each candidates}}
-      <div>{{this}}</div>
-    {{/each}}
+    <h1>{{company}}</h1>
+    <table class="pure-table">
+      {{#each candidates}}
+        <tr>
+          <td>{{this.question}}</td>
+          <td>{{this.score}}</td>
+        </tr>
+      {{/each}}
+    </table>
   </body>
 </html>
