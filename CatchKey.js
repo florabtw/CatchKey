@@ -101,8 +101,69 @@ app.get('/completed', function(request,response) {
   response.end();
 })
 
-/* recording helpers */
+var credentials = require('./credentials.js');
+var clarifyio = require('clarifyio');
+var client = new clarifyio.Client("api.clarify.io", credentials.key);
+function analyzeCandidate(company, candidatePhoneNumber) {
+  // get candidate audio
+  db.Company.findOne({ name: company}, function( error, co) {
+    var can = co.candidates[ candidatePhoneNumber ]
+    console.log('LOOK AT ME',can);
+    for (var i in can) {
+      console.log(can[i].answer)
+      // client.createBundle({
+      //   media_url : can[i].answer,
+      //   name : can[i].answer
+      // },function(){
+      //   console.log(arguments)
+      // })
 
+    setTimeout(function() {
+      client.search({
+        'query' : 'the OR fat OR cat OR lazy',
+        'filter' : 'bundle.name=="test bundle"'
+      },function(e, data) {
+        //console.log(arguments)
+        console.log(JSON.stringify(data))
+      })
+
+    },1000*10)
+
+    }
+
+    //client.search
+  // upload to clarify
+  //client.createBundle('url', function())
+  })
+}
+
+analyzeCandidate('CatchKey', '+13148537371');
+
+function score(result) {
+    itemResults = result.item_results;
+    return sumItemResults(itemResults);
+}
+
+function sumItemResults(results) {
+    return sumProperty(results, sumTermResults, 'term_results');
+}
+
+function sumTermResults(results) {
+    return sumProperty(results, sumMatches, 'matches');
+}
+
+function sumMatches(results) {
+    return sumProperty(results, function(x) { return x.length }, 'hits');
+}
+
+function sumProperty(results, func, prop) {
+    return results.reduce(function(acc, x) {
+        return acc + func(x[prop]);
+    }, 0);
+}
+
+//module.exports.analyze = analyzeCandidate;
+/* recording helpers */
 app.post('/:company/recording',function(request, response) {
   response.setHeader('content-type', 'application/xml')
   var 
@@ -113,8 +174,8 @@ app.post('/:company/recording',function(request, response) {
     console.log('this quiestion:', questionNo);
 
     if (recording){
-      db.saveCandidateResponse(
-        company, questionNo - 1, caller, recording );
+      // db.saveCandidateResponse(
+      //   company, questionNo - 1, caller, recording );
     }
     // if ( questionNo > 0 && ( request.body.RecordingDuration/1 < 4 || (!recording && !retry) )) {      
     //   response.end( RetryTemplate({ 'company': company, 'questionNo': questionNo }));
@@ -126,6 +187,7 @@ app.post('/:company/recording',function(request, response) {
         if (bool) {
           response.end(
           HangupTemplate());
+          analyzeCandidate(company, caller);
         } 
         else {
           console.log(co.questions[ questionNo ].question)
