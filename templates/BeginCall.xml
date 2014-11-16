@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
-<Say voice="man">What's your name?</Say>
-<Record 
-  action="http://198.199.104.128:5000/{{company}}/recording"
-  method="POST"
-  maxLength="30"
-  finishOnKey="*"
-  transcribe="false"
-  trim="true"
-  timeout="10" />
+<Say voice="woman">'SUp BRO, red'recting yo butt.</Say>
+<Redirect method="POST">http://198.199.104.128:5000/{{company}}/recording?question=0</Redirect>
 </Response>

@@ -12,6 +12,7 @@ var express = require('express'),
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/',function(request, response) {
   response.end('Hello World!');
@@ -39,7 +40,9 @@ app.get('/instructions', function(request, response) {
     BeginCallTemplate( { company : 'catchKey' } ));
 
 })
-
+var catchKeyPretendSetup = {
+  'question-1' :
+}
 app.post('/:company/questions', function( request, response) {
     response.end('thanks');
     var questions = [];
@@ -64,11 +67,11 @@ app.post('/:company/recording',function(request, response) {
     db.saveCandidateResponse(
       company, questionNo, caller, recording );
 
-    if (db.isLastQuestion(
-      company, questionNo)) {
-      response.end(
-        HangupTemplate());
-    }
+    db.isLastQuestion(
+      company, questionNo, function( bool ) {
+        response.end(
+          HangupTemplate());
+      });
 
 })
 app.listen(5000);

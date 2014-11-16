@@ -42,6 +42,7 @@ module.exports.saveCandidateResponse =
           // get a candidate...
           if (!companyToSave.candidates[caller]){
             companyToSave.candidates[caller] = {};
+            companyToSave.markModified('candidates');
           }
           // get the current question...
           var question = companyToSave.questions[ questionNo ];
@@ -60,7 +61,20 @@ module.exports.saveCandidateResponse =
       })
 }
 module.exports.isLastQuestion = 
-    function( company, questionNo ) {
+    function( company, questionNo, funct ) {
+      Company.findOne({ name: company}, function(error, co) {
+        if (error) {
+          throw "mongo failed hard when looking up a company for 'isLastQuestion'";
+        }
+        else if (!co) {
+          throw "mongo failed to find this company "+company;
+        }
+        else {
+          if (funct) {
+            funct( questionNo >= co.questions.length );
+          }
+        }
+      })
 }
 
 module.exports.Company = Company;
