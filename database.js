@@ -21,6 +21,12 @@ var PhoneNumber = mongoose.model('PhoneNumber',PhoneNumberSchema);
 
 module.exports.saveQuestionSet = function(company, questionSet) {
   Company.findOne( {name: company}, function( error, co) {
+    if (error) {
+      throw "mongodb had an error when saving a questionset to the db";
+    }
+    if (!co) {
+      co = new Company({name: company, questions: [], candidates: {}});
+    }
     co.questions = questionSet;
     co.markModified('questions');
     co.save();
