@@ -67,7 +67,7 @@ app.get('/:company/candidates', function(request, response) {
         }
         candidatesToReturn[i].total = total;
       }
-      console.log(candidatesToReturn)
+      console.log(JSON.stringify(candidatesToReturn))
       response.end(CandidatesTemplate({ company: company, candidates: candidatesToReturn }));
     })
     // var candidates = {
