@@ -144,7 +144,7 @@ function clarifyQuery( query, filter, response, co, funct ) {
                 co.markModified('candidates');
                 co.save();
                 if (funct) {
-                  funct( data )
+                  funct( data, response.score, response.question.goal, response.question.minimum, co )
                 }
             })
         }, 1000*30);
@@ -182,8 +182,22 @@ function analyzeCandidate(company, candidatePhoneNumber) {
         },"");
 
         // console.log(query);
-        clarifyQuery( query, bundleName, response, co, function(data) {
-
+        var query_count = Object.keys(can).length;
+        clarifyQuery( query, bundleName, response, co, function(data, score, goal, min) {
+          query_count--;
+          if (query_count == 0) {
+            var passcount = 0;
+            for (var i in can) {
+              if ( score >= goal ) {
+                passcount++;
+              }
+            }
+            if (passcount > min) {
+              console.log("TRYING TO TEXT SUCCESS")
+            } else {
+              console.log("TRYING TO TEXT FAILURE")
+            }
+          }
           //=)
         });
         // var bundleName = question.question + candidatePhoneNumber
