@@ -68,7 +68,7 @@ app.get('/:company/candidates', function(request, response) {
         }
     };
 
-    response.end(CandidatesTemplate({ candidates: candidates }));
+    response.end(CandidatesTemplate({ company: company, candidates: candidates }));
 })
 
 app.get('/:company/questions', function( request, response) {

@@ -4,13 +4,18 @@
     <title>Results</title>
     <meta charset="UTF-8">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
-    <script src="javascript/console.js"></script>
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
-    <link rel="stylesheet" type="text/css" href="stylesheets/console.css"/>
+    <link rel="stylesheet" type="text/css" href="stylesheets/candidates.css"/>
   </head>
   <body>
     <h1>{{company}}</h1>
     <table class="pure-table">
+      <thead>
+        <tr>
+          <td>Phone #</td>
+          <td>Score</td>
+        </tr>
+      </thead>
       {{#each candidates}}
         <tr>
           <td>{{@key}}</td>
@@ -18,8 +23,8 @@
         </tr>
         {{#each this.questions}}
           <tr>
-            <td>{{this.question}}</td>
-            <td>{{this.score}}</td>
+            <td class="pure-table-odd">{{this.question}}</td>
+            <td class="pure-table-odd">{{this.score}}</td>
           </tr>
         {{/each}}
       {{/each}}
