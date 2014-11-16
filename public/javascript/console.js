@@ -75,3 +75,10 @@ function addQuestions(questions) {
         addQuestion(val.question, val.keywords, val.goal);
     });
 }
+
+$('td').each(function(index, element) {
+    var me = $(element);
+    if ((me).text().trim() == 'NaN') {
+        me.text('');
+    }
+})
