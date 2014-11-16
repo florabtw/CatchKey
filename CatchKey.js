@@ -84,7 +84,7 @@ app.post('/:company/recording',function(request, response) {
       db.saveCandidateResponse(
         company, questionNo - 1, caller, recording );
     } else if (questionNo > 0) {      
-      response.end( RetryTemplate({ 'company': company, 'questionNo': questionNo - 1}));
+      response.end( RetryTemplate({ 'company': company, 'questionNo': questionNo }));
       return;
     }
 
@@ -95,9 +95,6 @@ app.post('/:company/recording',function(request, response) {
           HangupTemplate());
         } 
         else {
-          if (retry === 1 && questionNo !== 0) {
-            questionNo -= 1;
-          }
           response.end(
             QuestionTemplate({
               'question' : co.questions[ questionNo ].question,
