@@ -84,7 +84,7 @@ app.post('/:company/recording',function(request, response) {
       db.saveCandidateResponse(
         company, questionNo - 1, caller, recording );
     }
-    if ( request.body.RecordingDuration/1 < 2 || (!recording && !retry) ) {      
+    if ( request.body.RecordingDuration/1 < 2 || (!recording && retry) ) {      
       response.end( RetryTemplate({ 'company': company, 'questionNo': questionNo }));
       return;
     }
