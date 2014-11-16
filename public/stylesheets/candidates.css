@@ -3,6 +3,6 @@ body {
   margin: 0 auto;
 }
 
-.pure-table-odd td {
-  padding-left: 20px;
+.pure-table-odd td:first-child {
+  padding-left: 50px;
 }
