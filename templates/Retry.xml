@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
 <Say voice="woman">Sorry, I didn't catch that, please try again.</Say>
-<Redirect method="POST">http://198.199.104.128:5000/{{company}}/recording?question={{questionNo}}&retry=1</Redirect>
+<Redirect method="POST">http://198.199.104.128:5000/{{company}}/recording?question={{questionNo}}&amp;retry=1</Redirect>
 </Response>
