@@ -1,6 +1,10 @@
 var server = 'http://198.199.104.128:5000'
 var numRows = 1;
 
+$(document).ready(function() {
+    getQuestions();
+});
+
 function addRow() {
     addQuestion("", "");
 }
@@ -58,9 +62,14 @@ function setQuestions() {
 function getQuestions() {
     questions =
         [
-            {question: 'What day is it?', keywords: 'Today' },
+            { question: 'What day is it?', keywords: 'Today' },
             { question: 'How old are you?', keywords: 'old enough' }
         ]
+
+    url = server + '/CatchKey/questions'
+    $.get(url, function(data) {
+        console.log(data);
+    });
 
     var firstQ = questions.shift();
 
