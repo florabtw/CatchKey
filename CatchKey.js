@@ -186,7 +186,7 @@ function analyzeCandidate(company, candidatePhoneNumber) {
         clarifyQuery( query, bundleName, response, co, function(data, score, goal, min) {
           query_count--;
           console.log('query count',query_count)
-          if (query_count == 0) {
+          if (query_count == 1) {
             var passcount = 0;
             console.log('score => goal', score, goal)
             if ( score >= goal ) {
