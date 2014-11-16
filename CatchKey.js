@@ -113,7 +113,32 @@ function analyzeCandidate(company, candidatePhoneNumber) {
   //client.createBundle('url', function())
   })
 }
- analyzeCandidate('CatchKey', '+13148537371');
+
+analyzeCandidate('CatchKey', '+13148537371');
+
+function score(result) {
+    itemResults = result.item_results;
+    return sumItemResults(itemResults);
+}
+
+function sumItemResults(results) {
+    return sumProperty(results, sumTermResults, 'term_results');
+}
+
+function sumTermResults(results) {
+    return sumProperty(results, sumMatches, 'matches');
+}
+
+function sumMatches(results) {
+    return sumProperty(results, function(x) { return x.length }, 'hits');
+}
+
+function sumProperty(results, func, prop) {
+    return results.reduce(function(acc, x) {
+        return acc + func(x[prop]);
+    }, 0);
+}
+
 //module.exports.analyze = analyzeCandidate;
 /* recording helpers */
 app.post('/:company/recording',function(request, response) {
