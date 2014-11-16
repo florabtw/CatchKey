@@ -84,15 +84,10 @@ app.post('/:company/recording',function(request, response) {
           HangupTemplate());
         } 
         else {
-          console.log(QuestionTemplate({
-              'question' : co.questions[ questionNo ].question,
-              'questionNo' : questionNo,
-              'company' : company
-            }))
           response.end(
             QuestionTemplate({
               'question' : co.questions[ questionNo ].question,
-              'questionNo' : questionNo,
+              'questionNo' : questionNo + 1,
               'company' : company
             }))
         }
