@@ -77,11 +77,12 @@ app.post('/:company/recording',function(request, response) {
     caller = request.body.Caller,
     recording = request.body.RecordingUrl;
 
+    console.log(questionNo > 0, questionNo)
 
     if (recording){
       db.saveCandidateResponse(
         company, questionNo - 1, caller, recording );
-    } else if (questionNo > 0) {
+    } else if (questionNo > 0) {      
       response.end( RetryTemplate({'questionNo': questionNo - 1}));
       return;
     }
