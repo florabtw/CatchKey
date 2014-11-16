@@ -52,17 +52,20 @@ app.get('/instructions', function(request, response) {
 app.get('/:company/candidates', function(request, response) {
     var company = request.params.company;
     var candidates = {
-        '573-690-1154':
-            [
-                { question: 'What day is it?',
-                  recording: 'google.com',
-                  score: 3
-                },
-                { question: 'Is OOP good?',
-                  recording: 'google.com',
-                  score: 5
-                }
-            ]
+        '573-690-1154': {
+            questions:
+                [
+                    { question: 'What day is it?',
+                      recording: 'google.com',
+                      score: 3
+                    },
+                    { question: 'Is OOP good?',
+                      recording: 'google.com',
+                      score: 5
+                    }
+                ],
+            total: 8
+        }
     };
 
     response.end(CandidatesTemplate({ candidates: candidates }));
