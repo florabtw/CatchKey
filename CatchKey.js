@@ -209,7 +209,7 @@ function analyzeCandidate(company, candidatePhoneNumber) {
               {
                 to: candidatePhoneNumber,
                 from: '+18168446984',
-                body: 'Thank you for chatting with me! Unfortunately, '+company+' has decided to persue other cadidates at this time.'
+                body: 'Thank you for chatting with me! Unfortunately, '+company+' has decided to pursue other candidates at this time.'
               })
             }
           }
