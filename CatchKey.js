@@ -86,7 +86,7 @@ app.post('/:company/recording',function(request, response) {
         else {
           response.end(
             QuestionTemplate({
-              'question' : co.question[ questionNo ],
+              'question' : co.questions[ questionNo ],
               'questionNo' : questionNo,
               'company' : company
             }))
