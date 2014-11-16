@@ -76,6 +76,7 @@ app.post('/:company/recording',function(request, response) {
     company = request.params.company,
     caller = request.body.Caller,
     recording = request.body.RecordingUrl;
+    retry = request.query.retry/1;
     console.log(request.body)
     console.log(questionNo > 0, questionNo, recording)
 
@@ -85,10 +86,8 @@ app.post('/:company/recording',function(request, response) {
     } else if (questionNo > 0) {      
       response.end( RetryTemplate({ 'company': company, 'questionNo': questionNo - 1}));
       return;
-    } else {
-      response.end( RetryTemplate({ 'company': company, 'questionNo':0}));
-      return;
     }
+
     db.questionExists(
       company, questionNo, function( bool, co ) {
         if (bool) {
@@ -96,6 +95,9 @@ app.post('/:company/recording',function(request, response) {
           HangupTemplate());
         } 
         else {
+          if (retry === 1 && questionNo !== 0) {
+            questionNo -= 1;
+          }
           response.end(
             QuestionTemplate({
               'question' : co.questions[ questionNo ].question,
