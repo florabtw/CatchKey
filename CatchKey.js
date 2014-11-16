@@ -63,7 +63,7 @@ app.get('/:company/candidates', function(request, response) {
           var flag = false;
           for (var j in candidates[i]) {
             console.log(i,j)
-            if (!candidates[i][j].question) {
+            if (!candidates[i][j].question && j/1 >= 0) {
               console.log( 'ignored', i, j)
               flag = true;
             };
