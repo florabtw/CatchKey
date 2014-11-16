@@ -1,0 +1,29 @@
+body {
+  padding: 10px;
+}
+
+.q-table {
+  display: table;
+  width: 90%;
+}
+
+.q-row {
+  display: table-row;
+}
+
+.q-row div {
+  display: table-cell;
+}
+
+form {
+  width: 100%;
+}
+
+input {
+  width: 90%;
+}
+
+input[type="submit"] {
+  margin: 10px 0;
+  width: 150px;
+}
