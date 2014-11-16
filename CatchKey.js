@@ -135,6 +135,7 @@ var client = new clarifyio.Client("api.clarify.io", credentials.key);
 var twilio = require('twilio')(credentials.twilio_sid, credentials.twilio_token);
 function clarifyQuery( query, filter, response, co, funct ) {
   //setTimeout(function() {
+        console.log('query!')
             client.search({
                 query: query,
                 filter: 'bundle.name=="'+filter+'"'
