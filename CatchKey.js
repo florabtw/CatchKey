@@ -81,7 +81,7 @@ app.post('/:company/recording',function(request, response) {
     if (recording){
       db.saveCandidateResponse(
         company, questionNo - 1, caller, recording );
-    } else {
+    } else if (questionNo > 0) {
       response.end( RetryTemplate({'questionNo': questionNo - 1}));
       return;
     }
