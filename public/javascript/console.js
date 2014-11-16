@@ -2,8 +2,12 @@ var server = 'http://198.199.104.128:5000'
 var numRows = 1;
 
 function addRow() {
-    var question = createInput('question' + numRows);
-    var keywords = createInput('keywords' + numRows);
+    addQuestion("", "");
+}
+
+function addQuestion(question, keywords) {
+    var question = createInput('question' + numRows, question);
+    var keywords = createInput('keywords' + numRows, keywords);
     numRows++;
     var btnRemove = createButton();
 
@@ -30,7 +34,7 @@ function createButton() {
         );
 }
 
-function createInput(name) {
+function createInput(name, text) {
     return $('<div/>')
         .addClass('pure-u-2-5')
         .append(
@@ -38,6 +42,7 @@ function createInput(name) {
                 .addClass("pure-input-1")
                 .attr('type', 'text')
                 .attr('name', name)
+                .val(text)
         );
 }
 
@@ -47,5 +52,26 @@ function setQuestions() {
 
     $.post(url, data, function() {
         alert('success!');
+    });
+}
+
+function getQuestions() {
+    questions =
+        [
+            {question: 'What day is it?', keywords: 'Today' },
+            { question: 'How old are you?', keywords: 'old enough' }
+        ]
+
+    var firstQ = questions.shift();
+
+    $('#first-q').val(firstQ.question);
+    $('#first-k').val(firstQ.keywords);
+
+    addQuestions(questions);
+}
+
+function addQuestions(questions) {
+    $.each(questions, function(i, val) {
+        addQuestion(val.question, val.keywords);
     });
 }
