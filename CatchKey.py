@@ -7,11 +7,18 @@ questions = [
 ]
 
 submissions = {}
+<<<<<<< Updated upstream
+=======
+
+@app.route('/')
+
+def hello_world():
+    return 'Hello World!'
+>>>>>>> Stashed changes
 
 @app.route('/instructions')
 def requestForInstructions():
     return render_template('BeginCall.xml', company='catchkey')
-
 @app.route('/completed')
 def callCompleted(): pass
 
