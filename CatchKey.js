@@ -151,8 +151,9 @@ function analyzeCandidate(company, candidatePhoneNumber) {
         // var bundleName = question.question + candidatePhoneNumber
         setTimeout(function() {
             console.log(query)
+            var myquery = (function(){ return query; })()
             client.search({
-                query: query,
+                query: myquery,
                 filter: 'bundle.name=="test bundle"'
             },function(e, data) {
                 console.log(e)
