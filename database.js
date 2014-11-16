@@ -56,6 +56,7 @@ module.exports.saveCandidateResponse =
             companyToSave.markModified('candidates');
           }
           // get the current question...
+          console.log('?s => #',companyToSave.questions, questionNo)
           var question = companyToSave.questions[ questionNo ];
           if (!question){
             throw "question No has no corresponding question in the company question set";
