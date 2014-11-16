@@ -149,6 +149,7 @@ function clarifyCreateBundle( url, name ) {
   })
 }
 analyzeCandidate('CatchKey', '+13148537371')
+var randoPrefix = ''+Math.random();
 function analyzeCandidate(company, candidatePhoneNumber) {
   // get candidate audio
   db.Company.findOne({ name: company}, function( error, co) {
@@ -164,7 +165,7 @@ function analyzeCandidate(company, candidatePhoneNumber) {
             return;
         }
         console.log(JSON.stringify(response))
-        var bundleName = 'oogidy'+company+i+candidatePhoneNumber;
+        var bundleName = randoPrefix+company+i+candidatePhoneNumber;
         clarifyCreateBundle( response.answer, bundleName )
         console.log('answer=>',response.answer)
         var query = response.question.answers.reduce(function(acc,x) {
