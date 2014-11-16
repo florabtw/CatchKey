@@ -82,7 +82,7 @@ function analyzeCandidate(company, candidatePhoneNumber) {
   // get candidate audio
   db.Company.findOne({ name: company}, function( error, co) {
     var can = co.candidates[ candidatePhoneNumber ]
-    console.log(can);
+    console.log('LOOK AT ME',can);
   // upload to clarify
   //client.createBundle('url', function())
   })
