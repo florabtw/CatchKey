@@ -159,16 +159,16 @@ function analyzeCandidate(company, candidatePhoneNumber) {
             return;
         }
         console.log(JSON.stringify(response))
-        //larifyCreateBundle( answer.answer,  )
+        clarifyCreateBundle( response.answer, company+i+candidatePhoneNumber )
 
-        // var query = question.answers.reduce(function(acc,x) {
-        //     return acc + ' | ' + x;
-        // },"");
+        var query = question.answers.reduce(function(acc,x) {
+            return acc + ' | ' + x;
+        },"");
 
         // console.log(query);
-        // clarifyQuery( query, function(data) {
-
-        // });
+        clarifyQuery( query, function(data) {
+          //console.log(JSON.stringify(data))
+        });
         // var bundleName = question.question + candidatePhoneNumber
         
     }
