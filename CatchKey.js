@@ -65,7 +65,7 @@ app.get('/:company/candidates', function(request, response) {
                     }
                 ],
             total: 8
-        }
+        },
         '573-456-2355': {
             questions:
                 [
