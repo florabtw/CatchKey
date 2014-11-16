@@ -37,7 +37,7 @@ const
 app.get('/instructions', function(request, response) {
   response.setHeader('content-type', 'application/xml')
   response.end( 
-    BeginCallTemplate( { company : 'catchKey' } ));
+    BeginCallTemplate( { company : 'CatchKey' } ));
 
 })
 
