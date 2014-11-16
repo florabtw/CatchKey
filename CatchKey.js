@@ -36,6 +36,10 @@ const
   hbs.compile(
     ''+fs.readFileSync('templates/Retry.xml','utf8')
     );
+  CandidatesTemplate =
+  hbs.compile(
+    ''+fs.readFileSync('templates/candidates.html','utf8')
+    );
 
 
 app.get('/instructions', function(request, response) {
@@ -43,6 +47,25 @@ app.get('/instructions', function(request, response) {
   response.end( 
     BeginCallTemplate( { company : 'CatchKey' } ));
 
+})
+
+app.get('/:company/candidates', function(request, response) {
+    var company = request.params.company;
+    var candidates = {
+        '573-690-1154':
+            [
+                { question: 'What day is it?',
+                  recording: 'google.com',
+                  score: 3
+                },
+                { question: 'Is OOP good?',
+                  recording: 'google.com',
+                  score: 5
+                }
+            ]
+    };
+
+    response.end(CandidatesTemplate({ candidates: candidates }));
 })
 
 app.get('/:company/questions', function( request, response) {
