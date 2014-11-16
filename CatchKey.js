@@ -77,7 +77,7 @@ app.post('/:company/recording',function(request, response) {
     caller = request.body.Caller,
     recording = request.body.RecordingUrl;
 
-    console.log(questionNo > 0, questionNo)
+    console.log(questionNo > 0, questionNo, recording)
 
     if (recording){
       db.saveCandidateResponse(
