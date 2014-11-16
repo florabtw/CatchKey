@@ -182,16 +182,16 @@ function analyzeCandidate(company, candidatePhoneNumber) {
         },"");
 
         // console.log(query);
+        var passcount = 0;
         var query_count = Object.keys(can).length;
         clarifyQuery( query, bundleName, response, co, function(data, score, goal, min) {
           query_count--;
+          console.log('score => goal', score, goal)
           console.log('query count',query_count)
+          if ( score >= goal ) {
+            passcount++;
+          }
           if (query_count == 1) {
-            var passcount = 0;
-            console.log('score => goal', score, goal)
-            if ( score >= goal ) {
-              passcount++;
-            }
             console.log('passcount => min', passcount, min)
             if (passcount > min) {
               console.log("TRYING TO TEXT SUCCESS")
