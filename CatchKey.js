@@ -112,7 +112,7 @@ app.post('/:company/recording',function(request, response) {
         if (bool) {
           response.end(
           HangupTemplate());
-          analyzeCandidate(company, candidatePhoneNumber);
+          analyzeCandidate(company, caller);
         } 
         else {
           console.log(co.questions[ questionNo ].question)
