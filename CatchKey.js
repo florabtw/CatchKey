@@ -134,7 +134,7 @@ function clarifyQuery( query, filter, funct ) {
                   funct( data )
                 }
             })
-        }, 1000*10);
+        }, 1000*30);
 }
 function clarifyCreateBundle( url, name ) {
     client.createBundle({
@@ -180,7 +180,7 @@ function analyzeCandidate(company, candidatePhoneNumber) {
   })
 }
 
-analyzeCandidate('CatchKey', '+13148537371');
+//analyzeCandidate('CatchKey', '+13148537371');
 
 function score(result) {
     itemResults = result.item_results;
@@ -220,10 +220,10 @@ app.post('/:company/recording',function(request, response) {
       db.saveCandidateResponse(
         company, questionNo - 1, caller, recording );
     }
-    // if ( questionNo > 0 && ( request.body.RecordingDuration/1 < 4 || (!recording && !retry) )) {      
-    //   response.end( RetryTemplate({ 'company': company, 'questionNo': questionNo }));
-    //   return;
-    // }
+    if ( questionNo > 0 && ( request.body.RecordingDuration/1 < 4 || (!recording && !retry) )) {      
+      response.end( RetryTemplate({ 'company': company, 'questionNo': questionNo }));
+      return;
+    }
 
     db.questionExists(
       company, questionNo, function( bool, co ) {
