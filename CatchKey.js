@@ -144,6 +144,7 @@ function clarifyQuery( query, filter, response, co, funct ) {
                 console.log(e)
                 console.log(JSON.stringify(data))
                 console.log('score =>', score( data));
+                console.log(arguments)
                 if (!response) response = bundles[filter]
                 response.score = score( data);
                 co.markModified('candidates');
