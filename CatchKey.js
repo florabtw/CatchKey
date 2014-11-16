@@ -161,7 +161,7 @@ function analyzeCandidate(company, candidatePhoneNumber) {
         console.log(JSON.stringify(response))
         clarifyCreateBundle( response.answer, company+i+candidatePhoneNumber )
 
-        var query = question.answers.reduce(function(acc,x) {
+        var query = response.question.answers.reduce(function(acc,x) {
             return acc + ' | ' + x;
         },"");
 
