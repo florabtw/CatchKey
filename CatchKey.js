@@ -62,6 +62,7 @@ app.get('/:company/candidates', function(request, response) {
         
         for (var j in candidates[i]) {
           candidates[i][j].recording = candidates[i][j].answer;
+          candidates[i][j].question = candidates[i][j].question.question
           candidatesToReturn[i].questions.push(candidates[i][j]);
           total += candidates[i][j].score;
         }
