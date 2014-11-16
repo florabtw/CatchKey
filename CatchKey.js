@@ -90,35 +90,6 @@ app.get('/:company/candidates', function(request, response) {
     } catch (e) {
       console.log('tried to refresh page too early')
     }
-    // var candidates = {
-    //     '458-343-5567': {
-    //         questions:
-    //             [
-    //                 { question: 'What day is it?',
-    //                   recording: 'http://soundoftext.com/audio/English/what.mp3',
-    //                   score: 3
-    //                 },
-    //                 { question: 'Is OOP good?',
-    //                   recording: 'google.com',
-    //                   score: 5
-    //                 }
-    //             ],
-    //         total: 8
-    //     },
-    //     '573-456-2355': {
-    //         questions:
-    //             [
-    //                 { question: 'What day is it?',
-    //                   recording: 'google.com',
-    //                   score: 2
-    //                 },
-    //                 { question: 'Is OOP good?',
-    //                   recording: 'google.com',
-    //                   score: 4
-    //                 }
-    //             ],
-    //         total: 6
-    //     }
     });
 
 // })
@@ -140,13 +111,14 @@ app.post('/:company/questions', function( request, response) {
     var questions = [];
     for (var key in request.body) {
       if (key.indexOf('question') >= 0 && request.body[key].length > 0) {
-
         var num = key.substring( 'question'.length );
         var answers = request.body[ 'keywords'+num ];
         var question = request.body[ 'question'+num ];
-        questions.push( {'question': question, 'answers': answers.split(',') } )
+        var goal = request.body[ 'goal'+num ];
+        questions.push( {'question': question, 'answers': answers.split(','), 'goal':goal } )
       }
     }
+    questions.minimum = request.body['minimum'];
     console.log(questions)
     var company = request.params.company;
     db.saveQuestionSet( company, questions );
