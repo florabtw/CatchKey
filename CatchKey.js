@@ -195,7 +195,7 @@ function analyzeCandidate(company, candidatePhoneNumber) {
           }
           if (query_count == 1) {
             console.log('passcount => min', passcount, min)
-            if (passcount > min) {
+            if (passcount >= min) {
               
               twilio.sendMessage(
               {
