@@ -45,6 +45,14 @@ app.post('/:company/questions', function( request, response) {
     response.end('thanks');
     console.log(request.body);
     var questions = [];
+    for (var key in request.body) {
+      if (key.indexOf('question') >= 0) {
+        var num = key.substring( 'question'.length );
+        var answers = request.body[ 'answer'+num ];
+        questions.push( {'question': question, 'answers': answers.split(',') } )
+      }
+    }
+    console.log(questions)
     var company = request.params.company;
     db.saveQuestionSet( company, questions );
 })
