@@ -75,11 +75,11 @@ module.exports.saveCandidateResponse =
         }
       })
 }
-module.exports.isLastQuestion = 
+module.exports.questionExists = 
     function( company, questionNo, funct ) {
       Company.findOne({ name: company}, function(error, co) {
         if (error) {
-          throw "mongo failed hard when looking up a company for 'isLastQuestion'";
+          throw "mongo failed hard when looking up a company for 'questionExists'";
         }
         else if (!co) {
           throw "mongo failed to find this company "+company;
@@ -87,7 +87,7 @@ module.exports.isLastQuestion =
         else {
           if (funct) {
             console.log('last query?', questionNo, co.questions.length );
-            funct( questionNo >= co.questions.length - 1, co );
+            funct( questionNo >= co.questions.length, co );
           }
         }
       })

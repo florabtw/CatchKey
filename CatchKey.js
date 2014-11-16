@@ -81,8 +81,8 @@ app.post('/:company/recording',function(request, response) {
       console.log('retry?')
       console.log(request.url)
     }
-    db.isLastQuestion(
-      company, questionNo, function( bool, co ) {
+    db.questionExists(
+      company, questionNo + 1, function( bool, co ) {
         if (bool) {
           response.end(
           HangupTemplate());
