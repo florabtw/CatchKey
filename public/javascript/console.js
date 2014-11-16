@@ -5,25 +5,40 @@ function addRow() {
     var question = createInput('question' + numRows);
     var keywords = createInput('keywords' + numRows);
     numRows++;
-    var btnRemove = $('<button/>').attr('type', 'button').text('-')
+    var btnRemove = createButton();
 
-    var row = $('<div/>')
-        .addClass('q-row')
+    btnRemove.find('button').eq(0).click(function() {
+        question.remove();
+        keywords.remove();
+        btnRemove.remove();
+    });
+
+    $('#questions')
         .append(question)
         .append(keywords)
         .append(btnRemove);
+}
 
-    btnRemove.click(function() {
-      row.remove();
-    });
-
-    $('.q-table').eq(0).append(row);
+function createButton() {
+    return $('<div/>')
+        .addClass('pure-u-1-5')
+        .append(
+            $('<button/>')
+                .addClass('pure-u-2-5 pure-button')
+                .attr('type', 'button')
+                .text('Remove')
+        );
 }
 
 function createInput(name) {
-    return $('<div/>').append(
-        $('<input/>').attr('type', 'text').attr('name', name)
-    );
+    return $('<div/>')
+        .addClass('pure-u-2-5')
+        .append(
+            $('<input/>')
+                .addClass("pure-input-1 pure-input-rounded")
+                .attr('type', 'text')
+                .attr('name', name)
+        );
 }
 
 function setQuestions() {
