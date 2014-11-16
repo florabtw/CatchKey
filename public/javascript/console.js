@@ -60,23 +60,16 @@ function setQuestions() {
 }
 
 function getQuestions() {
-    questions =
-        [
-            { question: 'What day is it?', keywords: 'Today' },
-            { question: 'How old are you?', keywords: 'old enough' }
-        ]
-
     url = server + '/CatchKey/questions'
+
     $.get(url, function(data) {
-        console.log(data);
+        var firstQ = questions.shift();
+
+        $('#first-q').val(firstQ.question);
+        $('#first-k').val(firstQ.keywords);
+
+        addQuestions(questions);
     });
-
-    var firstQ = questions.shift();
-
-    $('#first-q').val(firstQ.question);
-    $('#first-k').val(firstQ.keywords);
-
-    addQuestions(questions);
 }
 
 function addQuestions(questions) {
