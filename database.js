@@ -66,6 +66,7 @@ module.exports.saveCandidateResponse =
           };
           companyToSave.markModified('candidates');
           companyToSave.save(function(error) {
+            console.log(error);
             throw "response failed to save to mongodb";
           });
         }
