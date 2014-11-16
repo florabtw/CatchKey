@@ -51,26 +51,30 @@ app.get('/instructions', function(request, response) {
 
 app.get('/:company/candidates', function(request, response) {
     var company = request.params.company;
-
-    db.Company.findOne({ name: company}, function(err, comp){
-      var candidates = comp.candidates;
-      var candidatesToReturn = {};
-      for (var i in candidates) {
-        var total = 0;
-        candidatesToReturn[i] = {};
-        candidatesToReturn[i].questions = [];
-        
-        for (var j in candidates[i]) {
-          candidates[i][j].recording = candidates[i][j].answer;
-          candidates[i][j].question = candidates[i][j].question.question
-          candidatesToReturn[i].questions.push(candidates[i][j]);
-          total += candidates[i][j].score;
+    try {
+      db.Company.findOne({ name: company}, function(err, comp){
+        var candidates = comp.candidates;
+        var candidatesToReturn = {};
+        for (var i in candidates) {
+          var total = 0;
+          candidatesToReturn[i] = {};
+          candidatesToReturn[i].questions = [];
+          
+          for (var j in candidates[i]) {
+            if (!candidates[i][j].question) continue;
+            candidates[i][j].recording = candidates[i][j].answer;
+            candidates[i][j].question = candidates[i][j].question.question
+            candidatesToReturn[i].questions.push(candidates[i][j]);
+            total += candidates[i][j].score;
+          }
+          candidatesToReturn[i].total = total;
         }
-        candidatesToReturn[i].total = total;
-      }
-      console.log(JSON.stringify(candidatesToReturn))
-      response.end(CandidatesTemplate({ company: company, candidates: candidatesToReturn }));
-    })
+        console.log(JSON.stringify(candidatesToReturn))
+        response.end(CandidatesTemplate({ company: company, candidates: candidatesToReturn }));
+      })
+    } catch (e) {
+      console.log('tried to refresh page too early')
+    }
     // var candidates = {
     //     '458-343-5567': {
     //         questions:
