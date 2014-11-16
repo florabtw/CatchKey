@@ -26,15 +26,25 @@ const
   QuestionTemplate = 
   hbs.compile(
     ''+fs.readFileSync('templates/Question.xml','utf8')
+    ),
+  HangupTemplate =
+  hbs.compile(
+    ''+fs.readFileSync('templates/Hangup.xml','utf8')
     );
 
+
 app.get('/instructions', function(request, response) {
-  var caller = request.query.Caller;
-  console.log(caller)
-  console.log(BeginCallTemplate( { company : 'catchKey' } ))
   response.setHeader('content-type', 'application/xml')
   response.end( 
     BeginCallTemplate( { company : 'catchKey' } ));
+
+})
+
+app.post('/:company/questions', function( request, response) {
+    response.end('thanks');
+    var questions = [];
+    var company = request.params.company;
+    db.saveQuestionSet( company, questions );
 })
 
 app.get('/completed', function(request,response) {
@@ -44,11 +54,22 @@ app.get('/completed', function(request,response) {
 /* recording helpers */
 
 app.post('/:company/recording',function(request, response) {
-  var questionNo = request.query.recording || 0,
+  response.setHeader('content-type', 'application/xml')
+  var 
+    questionNo = request.query.questionNo || 0,
     company = request.params.company,
-    caller = request.data,
-    called = request.body.Called;
-    console.log(request.body)
+    caller = request.body.Caller,
+    recording = request.body.RecordingUrl;
+
+    db.saveCandidateResponse(
+      company, questionNo, caller, recording );
+
+    if (db.isLastQuestion(
+      company, questionNo)) {
+      response.end(
+        HangupTemplate());
+    }
+
 })
 app.listen(5000);
 

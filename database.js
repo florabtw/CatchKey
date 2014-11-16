@@ -2,18 +2,67 @@ var mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/test');
 
-var Company = mongoose.model('Company',
+var CompanySchema = new mongoose.Schema(
 {
   'name' : String,
-  'candidates' : []// blobbly
+  'questions' : [],
+  'candidates' : {}// blobbly
 })
 
-var PhoneNumber = mongoose.model('PhoneNumber',
+var PhoneNumberSchema = new mongoose.Schema(
 {
   'phoneNumber' : String,
   'allocated' : false,
   'owner' : String
 })
 
+var Company = mongoose.model('Company',CompanySchema);
+var PhoneNumber = mongoose.model('PhoneNumber',PhoneNumberSchema);
+
+module.exports.saveQuestionSet = function(company, questionSet) {
+  Company.findOne( {name: company}, function( error, co) {
+    co.questions = questionSet;
+    co.markModified('questions');
+    co.save();
+  })
+}
+
+module.exports.saveCandidateResponse = 
+    function(company, questionNo, caller, responseUrl ) {
+      Company.findOne( {name: company}, function( error, co ) {
+        if (error) {
+          throw "mongodb shat a brick";
+        }
+        else {
+          // get a company...
+          var companyToSave = co;
+          if (!companyToSave) {
+            throw "company does not exist to save recording for";
+          }
+          // get a candidate...
+          if (!companyToSave.candidates[caller]){
+            companyToSave.candidates[caller] = {};
+          }
+          // get the current question...
+          var question = companyToSave.questions[ questionNo ];
+          if (!question){
+            throw "question No has no corresponding question in the company question set";
+          }
+          companyToSave.candidates[caller][questionNo] = {
+            'question': question,
+            'answer': responseUrl
+          };
+          companyToSave.markModified('candidates');
+          companyToSave.save(function(error) {
+            throw "response failed to save to mongodb";
+          });
+        }
+      })
+}
+module.exports.isLastQuestion = 
+    function( company, questionNo ) {
+}
+
 module.exports.Company = Company;
 module.exports.PhoneNumber = PhoneNumber;
+
