@@ -115,10 +115,9 @@ app.post('/:company/questions', function( request, response) {
         var answers = request.body[ 'keywords'+num ];
         var question = request.body[ 'question'+num ];
         var goal = request.body[ 'goal'+num ];
-        questions.push( {'question': question, 'answers': answers.split(','), 'goal':goal } )
+        questions.push( {'question': question, 'answers': answers.split(','), 'goal':goal, 'minimum': request.body['minimum'] } )
       }
     }
-    questions.minimum = request.body['minimum'];
     console.log(questions)
     var company = request.params.company;
     db.saveQuestionSet( company, questions );
@@ -184,6 +183,7 @@ function analyzeCandidate(company, candidatePhoneNumber) {
 
         // console.log(query);
         clarifyQuery( query, bundleName, response, co, function(data) {
+
           //=)
         });
         // var bundleName = question.question + candidatePhoneNumber
