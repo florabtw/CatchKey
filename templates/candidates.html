@@ -28,7 +28,9 @@
                 {{this.question}}
               </div>
               <div class="right">
-                {{this.recording}}
+                <audio controls>
+                  <source src="{{this.recording}}" type="audio/mpeg">
+                </audio>
               </div>
               <div style="clear: both;"></div>
             </td>
