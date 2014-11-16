@@ -76,10 +76,11 @@ app.post('/:company/recording',function(request, response) {
 
     if (recording){
       db.saveCandidateResponse(
-        company, questionNo, caller, recording );
+        company, questionNo - 1, caller, recording );
     } else {
-      console.log('retry?')
-      console.log(request.url)
+      console.log('retry?');
+      res.redirect(request.url);
+      return;
     }
     db.questionExists(
       company, questionNo, function( bool, co ) {
