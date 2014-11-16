@@ -164,7 +164,7 @@ function analyzeCandidate(company, candidatePhoneNumber) {
             return;
         }
         console.log(JSON.stringify(response))
-        var bundleName = 'dijjery'+company+i+candidatePhoneNumber;
+        var bundleName = 'oogidy'+company+i+candidatePhoneNumber;
         clarifyCreateBundle( response.answer, bundleName )
         console.log('answer=>',response.answer)
         var query = response.question.answers.reduce(function(acc,x) {
