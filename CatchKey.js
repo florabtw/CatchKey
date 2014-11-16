@@ -185,6 +185,7 @@ function analyzeCandidate(company, candidatePhoneNumber) {
         var query_count = Object.keys(can).length;
         clarifyQuery( query, bundleName, response, co, function(data, score, goal, min) {
           query_count--;
+          console.log('query count',query_count)
           if (query_count == 0) {
             var passcount = 0;
             console.log('score => goal', score, goal)
