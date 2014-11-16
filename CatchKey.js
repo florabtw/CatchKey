@@ -76,9 +76,7 @@ app.post('/:company/recording',function(request, response) {
     company = request.params.company,
     caller = request.body.Caller,
     recording = request.body.RecordingUrl;
-    retry = request.query.retry/1;
-    console.log(request.body)
-    console.log(questionNo > 0, questionNo, recording)
+    console.log('this quiestion:', questionNo);
 
     if (recording){
       db.saveCandidateResponse(
@@ -96,6 +94,7 @@ app.post('/:company/recording',function(request, response) {
           HangupTemplate());
         } 
         else {
+          console.log(co.questions[ questionNo ].question)
           response.end(
             QuestionTemplate({
               'question' : co.questions[ questionNo ].question,
