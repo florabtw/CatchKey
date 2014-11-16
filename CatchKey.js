@@ -118,9 +118,21 @@ app.get('/completed', function(request,response) {
   response.end();
 })
 
+ 
 var credentials = require('./credentials.js');
 var clarifyio = require('clarifyio');
 var client = new clarifyio.Client("api.clarify.io", credentials.key);
+function clarifyQuery( query ) {
+  setTimeout(function() {
+            client.search({
+                query: query,
+                filter: 'bundle.name=="test bundle"'
+            },function(e, data) {
+                console.log(e)
+                console.log(data)
+            })
+        }, 1000*10);
+}
 function analyzeCandidate(company, candidatePhoneNumber) {
   // get candidate audio
   db.Company.findOne({ name: company}, function( error, co) {
@@ -147,19 +159,9 @@ function analyzeCandidate(company, candidatePhoneNumber) {
         },"");
 
         console.log(query);
-
+        clarifyQuery( query );
         // var bundleName = question.question + candidatePhoneNumber
-        setTimeout(function() {
-            console.log(query)
-            var myquery = (function(){ return query; })()
-            client.search({
-                query: myquery,
-                filter: 'bundle.name=="test bundle"'
-            },function(e, data) {
-                console.log(e)
-                console.log(data)
-            })
-        }, 1000*10);
+        
     }
 
     //client.search
