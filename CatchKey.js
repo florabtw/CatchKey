@@ -76,7 +76,7 @@ app.post('/:company/recording',function(request, response) {
     company = request.params.company,
     caller = request.body.Caller,
     recording = request.body.RecordingUrl;
-
+    console.log(request.body)
     console.log(questionNo > 0, questionNo, recording)
 
     if (recording){
