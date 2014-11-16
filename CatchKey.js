@@ -53,13 +53,17 @@ app.get('/:company/candidates', function(request, response) {
     var company = request.params.company;
     try {
       db.Company.findOne({ name: company}, function(err, comp){
+        if (!comp){
+          response.end('');
+          return;
+        }
         var candidates = comp.candidates;
         var candidatesToReturn = {};
         for (var i in candidates) {
           var flag = false;
           for (var j in candidates[i]) {
             if (!candidates[i][j].question) {
-              console.log( 'ignored', i, j, Object.keys(candidates[i][j]))
+              console.log( 'ignored', i, j)
               flag = true;
             };
           }
