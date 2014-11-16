@@ -73,13 +73,24 @@ app.post('/:company/recording',function(request, response) {
     caller = request.body.Caller,
     recording = request.body.RecordingUrl;
 
-    db.saveCandidateResponse(
-      company, questionNo, caller, recording );
-
+    if (recording){
+      db.saveCandidateResponse(
+        company, questionNo, caller, recording );
+    }
     db.isLastQuestion(
-      company, questionNo, function( bool ) {
-        response.end(
+      company, questionNo, function( bool, co ) {
+        if (bool === true) {
+          response.end(
           HangupTemplate());
+        } 
+        else {
+          response.end(
+            QuestionTemplate({
+              'question' : co.question[ questionNo ],
+              'questionNo' : questionNo,
+              'company' : company
+            }))
+        }
       });
 
 })

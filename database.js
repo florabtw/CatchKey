@@ -77,7 +77,7 @@ module.exports.isLastQuestion =
         }
         else {
           if (funct) {
-            funct( questionNo >= co.questions.length );
+            funct( questionNo >= co.questions.length, co );
           }
         }
       })
