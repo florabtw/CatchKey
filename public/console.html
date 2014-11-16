@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Admin Console</title>
+    <meta charset="UTF-8">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+    <style>
+      body {
+        padding: 10px;
+      }
+
+      .q-table {
+        display: table;
+        width: 90%;
+      }
+
+      .q-row {
+        display: table-row;
+      }
+
+      .q-row div {
+        display: table-cell;
+      }
+
+      form {
+        width: 100%;
+      }
+
+      input {
+        width: 90%;
+      }
+
+      input[type="submit"] {
+        margin: 10px 0;
+        width: 150px;
+      }
+    </style>
+    <script>
+      var server = 'http://198.199.104.128:5000'
+      var numRows = 1;
+
+      function addRow() {
+        var question = createInput('question' + numRows);
+        var keywords = createInput('keywords' + numRows);
+        numRows++;
+        var btnRemove = $('<button/>').attr('type', 'button').text('-')
+
+        var row = $('<div/>')
+                .addClass('q-row')
+                .append(question)
+                .append(keywords)
+                .append(btnRemove);
+
+        btnRemove.click(function() {
+          row.remove();
+        });
+
+        $('.q-table').eq(0).append(row);
+      }
+
+      function createInput(name) {
+          return $('<div/>').append(
+            $('<input/>').attr('type', 'text').attr('name', name)
+          );
+      }
+
+      function setQuestions() {
+        var url = server + '/CatchKey/questions';
+        var data = $('#questions').serialize();
+
+        $.post(url, data, function() {
+          alert('success!');
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <h1>CatchKey</h1>
+    <form id="questions">
+      <div class="q-table">
+        <div class="q-row">
+          <div>Question</div>
+          <div>Answer</div>
+        </div>
+        <div class="q-row">
+          <div>
+            <input name="question0" type="text" />
+          </div>
+          <div>
+            <input name="keywords0" type="text" />
+          </div>
+          <button type="button" onclick="addRow()">+</button>
+        </div>
+      </div>
+      <button type="button" onclick="setQuestions()">Save</button>
+    </form>
+  </body>
+</html>
