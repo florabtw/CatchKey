@@ -99,8 +99,9 @@ function analyzeCandidate(company, candidatePhoneNumber) {
       client.search({
         'query' : 'the OR fat OR cat OR lazy',
         'filter' : 'bundle.name=="'+can[i].answer + '"'
-      },function() {
-        console.log(arguments)
+      },function(e, data) {
+        //console.log(arguments)
+        console.log(data.item_results)
       })
 
     },1000*10)
