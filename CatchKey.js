@@ -122,7 +122,7 @@ app.get('/completed', function(request,response) {
 var credentials = require('./credentials.js');
 var clarifyio = require('clarifyio');
 var client = new clarifyio.Client("api.clarify.io", credentials.key);
-function clarifyQuery( query ) {
+function clarifyQuery( query, funct ) {
   setTimeout(function() {
             client.search({
                 query: query,
@@ -130,8 +130,19 @@ function clarifyQuery( query ) {
             },function(e, data) {
                 console.log(e)
                 console.log(data)
+                if (funct) {
+                  funct( data )
+                }
             })
         }, 1000*10);
+}
+function clarifyCreateBundle( url, name ) {
+    client.createBundle({
+    media_url : url,
+    name : name
+  },function(){
+    console.log(arguments)
+  })
 }
 function analyzeCandidate(company, candidatePhoneNumber) {
   // get candidate audio
@@ -139,27 +150,25 @@ function analyzeCandidate(company, candidatePhoneNumber) {
     var can = co.candidates[ candidatePhoneNumber ]
     console.log(co.questions);
 
-      // client.createBundle({
-      //   media_url : can[i].answer,
-      //   name : can[i].answer
-      // },function(){
-      //   console.log(arguments)
-      // })
 
     var questions = co.questions;
-    for (var i in questions) {
-        var question = questions[i];
+    for (var i in can) {
+        var response = can[i];
 
-        if (!question.answers) {
+        if (!response.answer) {
             return;
         }
+        console.log(JSON.stringify(response))
+        //larifyCreateBundle( answer.answer,  )
 
-        var query = question.answers.reduce(function(acc,x) {
-            return acc + ' | ' + x;
-        },"");
+        // var query = question.answers.reduce(function(acc,x) {
+        //     return acc + ' | ' + x;
+        // },"");
 
-        console.log(query);
-        clarifyQuery( query );
+        // console.log(query);
+        // clarifyQuery( query, function(data) {
+
+        // });
         // var bundleName = question.question + candidatePhoneNumber
         
     }
