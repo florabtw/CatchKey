@@ -125,9 +125,8 @@ function analyzeCandidate(company, candidatePhoneNumber) {
   // get candidate audio
   db.Company.findOne({ name: company}, function( error, co) {
     var can = co.candidates[ candidatePhoneNumber ]
-    console.log('LOOK AT ME',can);
-    for (var i in can) {
-      console.log(can[i].answer)
+    console.log(co.questions);
+
       // client.createBundle({
       //   media_url : can[i].answer,
       //   name : can[i].answer
@@ -135,17 +134,31 @@ function analyzeCandidate(company, candidatePhoneNumber) {
       //   console.log(arguments)
       // })
 
-    setTimeout(function() {
-      client.search({
-        'query' : 'the OR fat OR cat OR lazy',
-        'filter' : 'bundle.name=="test bundle"'
-      },function(e, data) {
-        //console.log(arguments)
-        console.log(JSON.stringify(data))
-      })
+    var questions = co.questions;
+    for (var i in questions) {
+        var question = questions[i];
 
-    },1000*10)
+        if (!question.answers) {
+            return;
+        }
 
+        var query = question.answers.reduce(function(acc,x) {
+            return acc + ' | ' + x;
+        },"");
+
+        console.log(query);
+
+        // var bundleName = question.question + candidatePhoneNumber
+        setTimeout(function() {
+            console.log(query)
+            client.search({
+                query: query,
+                filter: 'bundle.name=="test bundle"'
+            },function(e, data) {
+                console.log(e)
+                console.log(data)
+            })
+        }, 1000*10);
     }
 
     //client.search
