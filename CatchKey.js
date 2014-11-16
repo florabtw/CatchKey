@@ -52,7 +52,7 @@ app.get('/instructions', function(request, response) {
 app.get('/:company/candidates', function(request, response) {
     var company = request.params.company;
     var candidates = {
-        '573-690-1154': {
+        '458-343-5567': {
             questions:
                 [
                     { question: 'What day is it?',
@@ -65,6 +65,20 @@ app.get('/:company/candidates', function(request, response) {
                     }
                 ],
             total: 8
+        }
+        '573-456-2355': {
+            questions:
+                [
+                    { question: 'What day is it?',
+                      recording: 'google.com',
+                      score: 2
+                    },
+                    { question: 'Is OOP good?',
+                      recording: 'google.com',
+                      score: 4
+                    }
+                ],
+            total: 6
         }
     };
 
