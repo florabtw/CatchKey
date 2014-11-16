@@ -24,7 +24,7 @@ function createButton() {
         .addClass('pure-u-1-5')
         .append(
             $('<button/>')
-                .addClass('pure-u-2-5 pure-button')
+                .addClass('pure-u-2-5 button-error pure-button')
                 .attr('type', 'button')
                 .text('Remove')
         );
@@ -35,7 +35,7 @@ function createInput(name) {
         .addClass('pure-u-2-5')
         .append(
             $('<input/>')
-                .addClass("pure-input-1 pure-input-rounded")
+                .addClass("pure-input-1")
                 .attr('type', 'text')
                 .attr('name', name)
         );

@@ -1,14 +1,7 @@
-.q-table {
-  display: table;
-  width: 90%;
-}
-
-.q-row {
-  display: table-row;
-}
-
-.q-row div {
-  display: table-cell;
+body {
+  padding: 10px;
+  width: 960px;
+  margin: 0 auto;
 }
 
 form {
@@ -22,4 +15,23 @@ input {
 input[type="submit"] {
   margin: 10px 0;
   width: 150px;
+}
+
+.button-success,
+.button-error {
+  color: white;
+  border-radius: 4px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.button-error {
+  background: rgb(202, 60, 60); /* this is a maroon */
+}
+
+.button-success {
+  background: rgb(28, 184, 65); /* this is a green */
+}
+
+#save {
+  margin: 10px 0;
 }
