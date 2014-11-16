@@ -31,6 +31,10 @@ const
   HangupTemplate =
   hbs.compile(
     ''+fs.readFileSync('templates/Hangup.xml','utf8')
+    ),
+  RetryTemplate = 
+  hbs.compile(
+    ''+fs.readFileSync('templates/Retry.xml','utf8')
     );
 
 
@@ -78,8 +82,7 @@ app.post('/:company/recording',function(request, response) {
       db.saveCandidateResponse(
         company, questionNo - 1, caller, recording );
     } else {
-      console.log('retry?');
-      response.redirect(request.url);
+      response.end( RetryTemplate({'questionNo': questionNo - 1}));
       return;
     }
     db.questionExists(
