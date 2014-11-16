@@ -136,7 +136,6 @@ var twilio = require('twilio')(credentials.twilio_sid, credentials.twilio_token)
 var bundles = {};
 function clarifyQuery( query, filter, response, co, funct ) {
   //setTimeout(function() {
-      if (!response) response = bundles[filter]
         console.log('query!')
             client.search({
                 query: query,
@@ -145,6 +144,7 @@ function clarifyQuery( query, filter, response, co, funct ) {
                 console.log(e)
                 console.log(JSON.stringify(data))
                 console.log('score =>', score( data));
+                if (!response) response = bundles[filter]
                 response.score = score( data);
                 co.markModified('candidates');
                 co.save();
