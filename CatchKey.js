@@ -88,30 +88,31 @@ function analyzeCandidate(company, candidatePhoneNumber) {
     console.log('LOOK AT ME',can);
     for (var i in can) {
       console.log(can[i].answer)
-    }
+      client.createBundle({
+        media_url : can[i].answer,
+        name : can[i].answer
+      },function(){
+        console.log(arguments)
+      })
 
-    // client.createBundle({
-    //   media_url : can[0].answer,
-    //   name : can[0].answer
-    // },function(){
-    //   console.log(arguments)
-    // })
     setTimeout(function() {
       client.search({
-        'query' : 'the OR fat OR cat OR lazy'
-        //'filter' : 'bundle.name == \"'+can[0].answer + '\"'
+        'query' : 'the OR fat OR cat OR lazy',
+        'filter' : 'bundle.name == \"'+can[0].answer + '\"'
       },function() {
         console.log(arguments)
       })
 
     },1000*10)
+    
+    }
 
     //client.search
   // upload to clarify
   //client.createBundle('url', function())
   })
 }
-module.exports.analyze = analyzeCandidate;
+//module.exports.analyze = analyzeCandidate;
 /* recording helpers */
 app.post('/:company/recording',function(request, response) {
   response.setHeader('content-type', 'application/xml')
@@ -123,8 +124,8 @@ app.post('/:company/recording',function(request, response) {
     console.log('this quiestion:', questionNo);
 
     if (recording){
-      // db.saveCandidateResponse(
-      //   company, questionNo - 1, caller, recording );
+      db.saveCandidateResponse(
+        company, questionNo - 1, caller, recording );
     }
     // if ( questionNo > 0 && ( request.body.RecordingDuration/1 < 4 || (!recording && !retry) )) {      
     //   response.end( RetryTemplate({ 'company': company, 'questionNo': questionNo }));
@@ -150,5 +151,5 @@ app.post('/:company/recording',function(request, response) {
       });
 
 })
-// app.listen(5000);
+app.listen(5000);
 
