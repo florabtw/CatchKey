@@ -98,7 +98,7 @@ function analyzeCandidate(company, candidatePhoneNumber) {
     setTimeout(function() {
       client.search({
         'query' : 'the OR fat OR cat OR lazy',
-        'filter' : 'bundle.name=="test name"'
+        'filter' : 'bundle.name=="test bundle"'
       },function(e, data) {
         //console.log(arguments)
         console.log(data.item_results)
