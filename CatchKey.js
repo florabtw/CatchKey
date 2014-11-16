@@ -217,8 +217,8 @@ app.post('/:company/recording',function(request, response) {
     console.log('this quiestion:', questionNo);
 
     if (recording){
-      // db.saveCandidateResponse(
-      //   company, questionNo - 1, caller, recording );
+      db.saveCandidateResponse(
+        company, questionNo - 1, caller, recording );
     }
     // if ( questionNo > 0 && ( request.body.RecordingDuration/1 < 4 || (!recording && !retry) )) {      
     //   response.end( RetryTemplate({ 'company': company, 'questionNo': questionNo }));
