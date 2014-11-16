@@ -88,15 +88,25 @@ function analyzeCandidate(company, candidatePhoneNumber) {
     console.log('LOOK AT ME',can);
     for (var i in can) {
       console.log(can[i].answer)
-
     }
-    
-    client.createBundle({
-      media_url : can[0].answer,
-      name : can[0].answer
-    },function(){
-      console.log(arguments)
-    })
+
+    // client.createBundle({
+    //   media_url : can[0].answer,
+    //   name : can[0].answer
+    // },function(){
+    //   console.log(arguments)
+    // })
+    setTimeout(function() {
+      client.search({
+        'query' : 'the',
+        'filter' : 'bundle.name == \"'+can[0].answer + '\"'
+      },function() {
+        console.log(arguments)
+      })
+
+    },1000*10)
+
+    //client.search
   // upload to clarify
   //client.createBundle('url', function())
   })
