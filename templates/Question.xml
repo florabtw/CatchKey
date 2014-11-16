@@ -8,5 +8,5 @@
   finishOnKey="*"
   transcribe="false"
   trim="true"
-  timeout="10" />
+  timeout="5" />
 </Response>
