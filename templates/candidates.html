@@ -23,7 +23,15 @@
         </tr>
         {{#each this.questions}}
           <tr class="pure-table-odd">
-            <td>{{this.question}}</td>
+            <td>
+              <div class="left">
+                {{this.question}}
+              </div>
+              <div class="right">
+                {{this.recording}}
+              </div>
+              <div style="clear: both;"></div>
+            </td>
             <td>{{this.score}}</td>
           </tr>
         {{/each}}

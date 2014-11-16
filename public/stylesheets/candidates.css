@@ -10,3 +10,11 @@ table {
 .pure-table-odd td:first-child {
   padding-left: 50px;
 }
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
