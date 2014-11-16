@@ -58,7 +58,7 @@ app.get('/:company/candidates', function(request, response) {
         for (var i in candidates) {
           var flag = false;
           for (var j in candidates[i]) {
-            if (!candidates[i][i].question) {
+            if (!candidates[i][j].question) {
               flag = true;
             };
           }
