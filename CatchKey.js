@@ -56,8 +56,16 @@ app.get('/:company/candidates', function(request, response) {
         var candidates = comp.candidates;
         var candidatesToReturn = {};
         for (var i in candidates) {
+          var flag = false;
+          for (var j in candidates[i]) {
+            if (!candidates[i][i].question) {
+              flag = true;
+            };
+          }
+          if (flag === true) {
+            continue;
+          }
           var total = 0;
-          if (!candidates[i][0].question) continue;
           candidatesToReturn[i] = {};
           candidatesToReturn[i].questions = [];
           for (var j in candidates[i]) {
