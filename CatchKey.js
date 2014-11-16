@@ -111,7 +111,7 @@ function analyzeCandidate(company, candidatePhoneNumber) {
   //client.createBundle('url', function())
   })
 }
-
+module.exports.analyze = analyzeCandidate;
 /* recording helpers */
 app.post('/:company/recording',function(request, response) {
   response.setHeader('content-type', 'application/xml')
@@ -123,8 +123,8 @@ app.post('/:company/recording',function(request, response) {
     console.log('this quiestion:', questionNo);
 
     if (recording){
-      db.saveCandidateResponse(
-        company, questionNo - 1, caller, recording );
+      // db.saveCandidateResponse(
+      //   company, questionNo - 1, caller, recording );
     }
     // if ( questionNo > 0 && ( request.body.RecordingDuration/1 < 4 || (!recording && !retry) )) {      
     //   response.end( RetryTemplate({ 'company': company, 'questionNo': questionNo }));
@@ -150,5 +150,5 @@ app.post('/:company/recording',function(request, response) {
       });
 
 })
-app.listen(5000);
+// app.listen(5000);
 
