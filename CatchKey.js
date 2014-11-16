@@ -52,7 +52,7 @@ app.get('/:company/questions', function( request, response) {
     for (var i in questions) {
       questions.keywords = questions.answers
     }
-    res.json(questions);
+    response.json(questions);
   })
 })
 
