@@ -82,7 +82,7 @@ app.post('/:company/recording',function(request, response) {
       console.log(request.url)
     }
     db.questionExists(
-      company, questionNo + 1, function( bool, co ) {
+      company, questionNo, function( bool, co ) {
         if (bool) {
           response.end(
           HangupTemplate());
